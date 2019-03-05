@@ -42,12 +42,33 @@ export default [
 
       //admin
       {
+        path: '/setTest',
+        icon: 'form',
+        name:'制作试题',
+        authority:['admin'],
+        // hideChildrenInMenu:true,
+        routes:[
+          {
+            path:'/setTest/inputTests',
+            name:'上传题目',
+            icon:'upload',
+            component:'./SetTest/InputTests',
+          },
+          {
+            path:'/setTest/selectTests',
+            name:'制作问卷',
+            component:'./SetTest/SelectTests'
+          }
+        ]
+      },
+      {
         path: '/userResult',
         icon: 'inbox',
         name: '学生试题结果',
         authority: ['admin'],
-        component:'./UserResult'
+        component: './UserResult'
       },
+
 
       // forms
       {

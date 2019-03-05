@@ -6,7 +6,6 @@ import { Menu } from 'antd';
 import GridContent from '@/components/PageHeaderWrapper/GridContent';
 import styles from './Info.less';
 import BaseView from './BaseView';
-
 const { Item } = Menu;
 
 @connect(({ user, account }) => ({
