@@ -1,0 +1,40 @@
+@import '~antd/lib/style/themes/default.less';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  align-content: center;
+  justify-content: center;
+  background: @layout-body-background;
+}
+
+.content {
+  padding: 32px 32px;
+  flex: 1;
+}
+
+.top {
+  text-align: center;
+}
+
+.header {
+  height: 60px;
+  line-height: 60px;
+}
+
+.title {
+  font-size: 33px;
+  color: @heading-color;
+  font-family: Avenir, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  position: relative;
+  top: 2px;
+}
+
+.desc {
+  font-size: @font-size-base;
+  color: @text-color-secondary;
+  margin-top: 12px;
+  margin-bottom: 40px;
+}
