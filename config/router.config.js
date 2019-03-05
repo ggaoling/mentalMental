@@ -15,14 +15,38 @@ export default [
     Routes: ['src/pages/Authorized'],
     authority: ['admin', 'user'],
     routes: [
-      // dashboard
-      { path: '/', redirect: '/account/settings/base' },
+      { path: '/', redirect: '/account/settings' },
+      //user&admin
+      {
+        name: 'account',
+        icon: 'user',
+        path: '/account',
+        authority: ['admin', 'user'],
+        routes: [
+          {
+            path: '/account/settings',
+            name: 'settings',
+            component: './Account/Settings/Info',
+          },
+        ],
+      },
+
+      //user
       {
         path: '/takeTest',
         icon: 'form',
-        name: 'takeTest',
+        name: '测试题',
         authority: ['user'],
         component: './TakeTest',
+      },
+
+      //admin
+      {
+        path: '/userResult',
+        icon: 'inbox',
+        name: '学生试题结果',
+        authority: ['admin'],
+        component:'./UserResult'
       },
 
       // forms
@@ -90,19 +114,7 @@ export default [
           },
         ],
       },
-      {
-        name: 'account',
-        icon: 'user',
-        path: '/account',
-        authority: ['admin', 'user'],
-        routes: [
-          {
-            path: '/account/settings',
-            name: 'settings',
-            component: './Account/Settings/Info',
-          },
-        ],
-      },
+
       {
         component: '404',
       },

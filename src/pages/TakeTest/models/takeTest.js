@@ -6,7 +6,7 @@ export default {
     step: 1,
   },
 
-  effect: {
+  effects: {
     *fetchList(_, { call, put }) {
       const result = yield call();
       yield put({
