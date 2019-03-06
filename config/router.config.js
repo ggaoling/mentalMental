@@ -44,20 +44,37 @@ export default [
       {
         path: '/setTest',
         icon: 'form',
-        name:'制作试题',
-        authority:['admin'],
+        name: '制作试题',
+        authority: ['admin'],
         // hideChildrenInMenu:true,
-        routes:[
+        routes: [
           {
-            path:'/setTest/inputTests',
-            name:'上传题目',
-            icon:'upload',
-            component:'./SetTest/InputTests',
+            path: '/setTest/inputTests',
+            name: '上传题目',
+            icon: 'upload',
+            component: './SetTest/InputTests',
+            hideChildrenInMenu: true,
+            routes: [
+              {
+                path: '/setTest/inputTests',
+                redirect: '/setTest/inputTests/step1'
+              },
+              {
+                path: '/setTest/inputTests/step1',
+                name: 'step1',
+                component: './SetTest/InputTests/Step1',
+              },
+              {
+                path: '/setTest/inputTests/step2',
+                name: 'step2',
+                component: './SetTest/InputTests/Step2',
+              },
+            ]
           },
           {
-            path:'/setTest/selectTests',
-            name:'制作问卷',
-            component:'./SetTest/SelectTests'
+            path: '/setTest/selectTests',
+            name: '制作问卷',
+            component: './SetTest/SelectTests'
           }
         ]
       },

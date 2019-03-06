@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Steps ,Card} from 'antd';
+import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import styles from './style.less'
 
 const {Step}=Steps;
@@ -37,6 +38,7 @@ class InputTests extends Component {
                         <Step title="设置关联问题" />
                         <Step title="完成" />
                     </Steps>
+                    {children}
                 </Card>
 
             </PageHeaderWrapper>

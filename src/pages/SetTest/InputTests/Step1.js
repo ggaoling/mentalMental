@@ -4,7 +4,7 @@ import { Form, Input, Button, Icon } from 'antd';
 import router from 'umi/router';
 import styles from './style.less'
 
-
+let id = 0;
 const formItemLayout = {
     labelCol: {
         span: 5,
@@ -16,9 +16,9 @@ const formItemLayout = {
 
 const formItemLayoutWithoutLabel = {
     wrapperCol: {
-        xs: { span: 24, offset: 0 },
-        sm: { span: 20, offset: 4 },
-    },
+
+        sm: { span: 19, offset: 5 },
+    }
 }
 
 @connect(({ inputTests }) => ({ inputTests }))
@@ -46,16 +46,16 @@ class Step1 extends React.PureComponent {
         });
     }
     render() {
-        const { getFieldDecorator, validateFields } = form;
-        const { form: { data }, dispatch } = this.props;
-        getFieldDecorator('keys', { initialValue: [1, 2] });
+        const { inputTests: { data }, dispatch, form } = this.props;
+        const { getFieldDecorator, validateFields, getFieldValue } = form;
+        getFieldDecorator('keys', { initialValue: [0] });
         const keys = getFieldValue('keys');
-        const onValiedateForm=()=>{
-            validateFields((err,values)=>{
-                if(!err){
+        const onValiedateForm = () => {
+            validateFields((err, values) => {
+                if (!err) {
                     dispatch({
-                        type:'inputTests/save',
-                        payload:values,
+                        type: 'inputTests/save',
+                        payload: values,
                     })
                     router.push('/setTest/inputTests/step2')
                 }
@@ -63,7 +63,7 @@ class Step1 extends React.PureComponent {
         }
         const answerItems = keys.map((k, index) => (
             <Form.Item {...index == 0 ? formItemLayout : formItemLayoutWithoutLabel}
-                label={index === 0 ? 'answers' : ''}
+                label={index === 0 ? '答案选项' : ''}
                 required={index < 2 ? true : false}
                 key={k}>
                 {getFieldDecorator(`answers[${k}]`, {
@@ -75,7 +75,7 @@ class Step1 extends React.PureComponent {
                 })(
                     <Input placeholder="option" />
                 )}
-                {keys.length > 1 ? (
+                {keys.length > 2 ? (
                     <Icon className="dynamic-delete-button" type="minus-circle-o" disabled={keys.length === 1} onClick={e => this.remove(k)} />
                 ) : null}
             </Form.Item>
@@ -86,7 +86,7 @@ class Step1 extends React.PureComponent {
                     <Form.Item {...formItemLayout} label="问题">
                         {getFieldDecorator('question', {
                             initialValue: data.question,
-                            rules: [{ required, message: '请输入问题' }],
+                            rules: [{ required: true, message: '请输入问题' }],
                         })(<Input />)}
                     </Form.Item>
                     {answerItems}
