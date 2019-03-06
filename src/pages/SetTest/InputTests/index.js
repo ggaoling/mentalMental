@@ -1,16 +1,47 @@
-import React ,{Component} from 'react'
-import { connect } from 'dva';
+import React, { Component } from 'react'
+import { Steps ,Card} from 'antd';
+import styles from './style.less'
 
-class InputTests extends Component{
-    constructor(props){
+const {Step}=Steps;
+class InputTests extends Component {
+    constructor(props) {
         super(props)
     }
 
-    render(){
-        return(
-            <div>iii</div>
+    getCurrentStep() {
+        const { location: { pathname } } = this.props
+        const pathList = pathname.split('/');
+        switch (pathList[pathList.lenght - 1]) {
+            case 'step1':
+                return 0;
+            case 'step2':
+                return 1;
+            case 'step3':
+                return 2;
+            default:
+                return 0;
+        }
+    }
+    render() {
+        const { location, children } = this.props;
+
+        return (
+            <PageHeaderWrapper
+                title="录入题目"
+                tabActiveKey={location.pathname}
+                content="按照引导录入题目"
+            >
+                <Card bordered={false}>
+                    <Steps current={this.getCurrentStep()} className={styles.steps}>
+                        <Step title="新增或选择题目" />
+                        <Step title="设置关联问题" />
+                        <Step title="完成" />
+                    </Steps>
+                </Card>
+
+            </PageHeaderWrapper>
         )
     }
 }
 
-export default connect(({inputTests})=>({inputTests}))(InputTests)
+export default InputTests

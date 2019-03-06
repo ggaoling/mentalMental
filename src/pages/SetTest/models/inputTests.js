@@ -1,7 +1,12 @@
 export default{
     namespace:'inputTests',
 
-    state:{},
+    state:{
+        data:{
+            question:'',
+            answers:[]
+        },
+    },
 
     effects:{},
 
