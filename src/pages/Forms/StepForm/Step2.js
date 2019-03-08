@@ -16,12 +16,12 @@ const formItemLayout = {
 
 @connect(({ form, loading }) => ({
   submitting: loading.effects['form/submitStepForm'],
-  form
+  data:form.step
 }))
 @Form.create()
 class Step2 extends React.PureComponent {
   render() {
-    const { form:{data}, dispatch, submitting } = this.props;
+    const { data, dispatch, submitting,form } = this.props;
     const { getFieldDecorator, validateFields } = form;
     const onPrev = () => {
       router.push('/form/step-form/info');

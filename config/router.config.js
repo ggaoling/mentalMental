@@ -35,22 +35,27 @@ export default [
       {
         path: '/takeTest',
         icon: 'form',
-        name: '测试题',
+        name: 'takeTest',
         authority: ['user'],
         component: './TakeTest',
+      },
+      {
+        path:'result',
+        name:'result',
+        component:'./Result/Success'
       },
 
       //admin
       {
         path: '/setTest',
         icon: 'form',
-        name: '制作试题',
+        name: 'setTest',
         authority: ['admin'],
         // hideChildrenInMenu:true,
         routes: [
           {
             path: '/setTest/inputTests',
-            name: '上传题目',
+            name: 'inputTests',
             icon: 'upload',
             component: './SetTest/InputTests',
             hideChildrenInMenu: true,
@@ -69,11 +74,16 @@ export default [
                 name: 'step2',
                 component: './SetTest/InputTests/Step2',
               },
+              {
+                path: '/setTest/inputTests/step3',
+                name: 'step3',
+                component: './SetTest/InputTests/Step3',
+              },
             ]
           },
           {
             path: '/setTest/selectTests',
-            name: '制作问卷',
+            name: 'selectTests',
             component: './SetTest/SelectTests'
           }
         ]
@@ -81,7 +91,7 @@ export default [
       {
         path: '/userResult',
         icon: 'inbox',
-        name: '学生试题结果',
+        name: 'userResult',
         authority: ['admin'],
         component: './UserResult'
       },

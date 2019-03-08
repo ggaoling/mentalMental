@@ -35,4 +35,14 @@ export default {
   'menu.account.settings': '个人设置',
   'menu.account.trigger': '触发报错',
   'menu.account.logout': '退出登录',
+  'menu.setTest':'制作试题',
+  'menu.setTest.inputTests':'上传题目',
+  'menu.setTest.inputTests.step1':'上传题目(新增题目)',
+  'menu.setTest.inputTests.step2':'上传题目(设置关联问题)',
+  'menu.setTest.inputTests.step3':'上传题目(完成)',
+  'menu.setTest.selectTests':'制作问卷',
+  'menu.userResult':'学生试题结果',
+  'menu.takeTest':'测试题',
+
+
 };

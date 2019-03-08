@@ -9,10 +9,10 @@ class InputTests extends Component {
         super(props)
     }
 
-    getCurrentStep() {
+    getCurrentStep=()=> {
         const { location: { pathname } } = this.props
         const pathList = pathname.split('/');
-        switch (pathList[pathList.lenght - 1]) {
+        switch (pathList[pathList.length - 1]) {
             case 'step1':
                 return 0;
             case 'step2':
@@ -34,7 +34,7 @@ class InputTests extends Component {
             >
                 <Card bordered={false}>
                     <Steps current={this.getCurrentStep()} className={styles.steps}>
-                        <Step title="新增或选择题目" />
+                        <Step title="新增题目" />
                         <Step title="设置关联问题" />
                         <Step title="完成" />
                     </Steps>

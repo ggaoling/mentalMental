@@ -4,7 +4,7 @@ import { Form, Input, Button, Icon } from 'antd';
 import router from 'umi/router';
 import styles from './style.less'
 
-let id = 0;
+let id = 2;
 const formItemLayout = {
     labelCol: {
         span: 5,
@@ -16,15 +16,17 @@ const formItemLayout = {
 
 const formItemLayoutWithoutLabel = {
     wrapperCol: {
-
-        sm: { span: 19, offset: 5 },
-    }
+        span: 19, offset: 5
+    },
 }
 
-@connect(({ inputTests }) => ({ inputTests }))
-@Form.create()
-class Step1 extends React.PureComponent {
 
+@Form.create()
+class Step1 extends React.Component {
+
+    constructor(props) {
+        super(props)
+    }
     remove = (k) => {
         const { form } = this.props;
         const keys = form.getFieldValue('keys');
@@ -45,22 +47,24 @@ class Step1 extends React.PureComponent {
             keys: nextKeys,
         });
     }
+    onValiedateForm = () => {
+        const { form, dispatch, inputTests } = this.props;
+        let { data } = inputTests
+        let values = form.getFieldsValue();
+        values.answers = values.answers.map((ele, index) => { let obj = {}; obj.answer = ele; obj.binding = ''; obj.key = index; return obj })
+        dispatch({
+            type: 'inputTests/save',
+            payload: { data: { ...values } },
+        })
+        console.log(inputTests.data)
+        router.push('/setTest/inputTests/step2')
+    }
     render() {
         const { inputTests: { data }, dispatch, form } = this.props;
         const { getFieldDecorator, validateFields, getFieldValue } = form;
-        getFieldDecorator('keys', { initialValue: [0] });
+        getFieldDecorator('keys', { initialValue: [0, 1] });
         const keys = getFieldValue('keys');
-        const onValiedateForm = () => {
-            validateFields((err, values) => {
-                if (!err) {
-                    dispatch({
-                        type: 'inputTests/save',
-                        payload: values,
-                    })
-                    router.push('/setTest/inputTests/step2')
-                }
-            })
-        }
+
         const answerItems = keys.map((k, index) => (
             <Form.Item {...index == 0 ? formItemLayout : formItemLayoutWithoutLabel}
                 label={index === 0 ? '答案选项' : ''}
@@ -71,9 +75,12 @@ class Step1 extends React.PureComponent {
                     rules: [{
                         required: true,
                         message: '请输入答案选项或者移除该项'
-                    }]
+                    }, {
+                        max: 40, message: '最多输入40个字符'
+                    }],
+                    onValidateTrigger: ['onChange', 'onBlur']
                 })(
-                    <Input placeholder="option" />
+                    <Input placeholder="option" style={{ width: '80%', marginRight: 8 }} />
                 )}
                 {keys.length > 2 ? (
                     <Icon className="dynamic-delete-button" type="minus-circle-o" disabled={keys.length === 1} onClick={e => this.remove(k)} />
@@ -81,23 +88,24 @@ class Step1 extends React.PureComponent {
             </Form.Item>
         ))
         return (
-            <Fragment>
-                <Form layout="horizontal" className={styles.stepForm}>
+                <Form layout="horizontal" className={styles.stepForm} onSubmit={this.handleSubmit}>
                     <Form.Item {...formItemLayout} label="问题">
                         {getFieldDecorator('question', {
                             initialValue: data.question,
-                            rules: [{ required: true, message: '请输入问题' }],
+                            rules: [
+                                { required: true, message: '请输入问题' },
+                                { max: 60, message: '最多输入60个字符' }],
                         })(<Input />)}
                     </Form.Item>
                     {answerItems}
-                    <Button type="dashed" onClick={this.add} style={{ width: '60%' }}><Icon type="plus">增加一项</Icon></Button>
+                    <Button type="dashed" onClick={this.add} style={{ width: '60%', marginLeft: '22%' }}><Icon type="plus">增加一项</Icon></Button>
                     <Form.Item {...formItemLayout}>
-                        <Button type="primary" onClick={onValiedateForm}>下一步</Button>
+                        <Button type="primary" onClick={e => this.onValiedateForm()} style={{ marginLeft: '60%', marginTop: '15px' }}>下一步</Button>
                     </Form.Item>
                 </Form>
-            </Fragment>
+
         )
     }
 }
 
-export default Step1;
+export default connect(({ inputTests }) => ({ inputTests }))(Step1);

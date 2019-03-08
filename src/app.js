@@ -1,10 +1,12 @@
 import fetch from 'dva/fetch';
+import logger from 'redux-logger'
 
 export const dva = {
   config: {
     onError(err) {
       err.preventDefault();
     },
+    onAction:logger
   },
 };
 
