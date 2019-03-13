@@ -8,25 +8,6 @@ import styles from './BaseView.less';
 const FormItem = Form.Item;
 const { Option } = Select;
 
-// 头像组件 方便以后独立，增加裁剪之类的功能
-const AvatarView = ({ avatar }) => (
-  <Fragment>
-    <div className={styles.avatar_title}>
-      <FormattedMessage id="app.settings.basic.avatar" defaultMessage="Avatar" />
-    </div>
-    <div className={styles.avatar}>
-      <img src={avatar} alt="avatar" />
-    </div>
-    <Upload fileList={[]}>
-      <div className={styles.button_view}>
-        <Button icon="upload">
-          <FormattedMessage id="app.settings.basic.change-avatar" defaultMessage="Change avatar" />
-        </Button>
-      </div>
-    </Upload>
-  </Fragment>
-);
-
 const validatorPhone = (rule, value, callback) => {
   const values = value.split('-');
   if (!values[0]) {
@@ -45,15 +26,6 @@ const validatorPhone = (rule, value, callback) => {
 @Form.create()
 class BaseView extends Component {
   componentDidMount() {}
-
-  getAvatarURL() {
-    const { currentUser } = this.props;
-    if (currentUser.avatar) {
-      return currentUser.avatar;
-    }
-    const url = 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png';
-    return url;
-  }
 
   handleEdit = () => {
     const {
@@ -157,9 +129,6 @@ class BaseView extends Component {
               </List>
             </div>
           )}
-        </div>
-        <div className={styles.right}>
-          <AvatarView avatar={this.getAvatarURL()} />
         </div>
       </div>
     );

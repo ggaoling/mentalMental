@@ -1,20 +1,41 @@
+import router from 'umi/router';
+
 export default {
     namespace: 'inputTests',
 
     state: {
         data: {
-            question: '123',
-            answers: [{answer:'1',binding:'',key:0},
-            {answer:'2',binding:'',key:1}]
+            question: '',
+            importance: null,
+            type: 1,
+            // answers: [{ answer: '1', binding: '', key: 0 ,score:0},
+            // { answer: '2', binding: '', key: 1 ,score:0}]
+            answers:[]
         },
-        inputs: []
+        tempBinding: [],
+        score: [],
+        changeScore: [],
     },
 
     effects: {
 
-        *postData({payload},{select,call,put}){
-            const params=select(state=>state.data)
-        }
+        *postData({ payload }, { select, call, put }) {
+            let params = select(state => state.data)
+            const result=yield call()//发送上传问题api
+            // if(result.success){
+                router.push('/setTest/inputTests/step3')
+                const data= {
+                    question: '',
+                    importance: null,
+                    type: 1,
+                    answers:[]
+                }
+                put({
+                    type:'saveData',
+                    payload:{data:data}
+                })
+            }
+        // }
     },
 
     reducers: {
@@ -33,19 +54,58 @@ export default {
                 }
             }
         },
-    
-        saveInput(state, {payload} ) {
-            let{key,value}=payload
-            let{inputs}=state
-            inputs[key]=value;
+
+
+        //保存输入的要绑定的问题id
+        saveBindingInput(state, { payload }) {
+            let { key, value } = payload
+            let { tempBinding } = state
+            tempBinding[key] = value;
             return {
                 ...state,
-                inputs
+                tempBinding
             }
         },
-    
+
+        //更新score status
+        updateScoreChange(state, { payload }) {
+            let index=payload
+            let { changeScore } = state;
+            let status=changeScore[index]
+            changeScore[index]=!status
+            return {
+                ...state,
+                changeScore
+            }
+        },
+
+        saveScoreInput(state, { payload }) {
+            let { value, index } = payload;
+            let { score } = state;
+            score[index] = value;
+            return {
+                ...state,
+                score
+            }
+
+        },
+
+        saveScore(state, { payload }) {
+            let index = payload
+            let { data:{answers}, score } = state;
+            answers[index].score = score[index]
+            return{
+                ...state,
+                data:{
+                    ...state.data,
+                    answers
+                }
+            }
+        },
+
+        //绑定qid
         bindNext(state, { payload }) {
-            let value = state.inputs[payload];
+            let value = state.tempBinding[payload];
             let { data: { answers } } = state
             answers[payload].binding = value;
             return {
@@ -53,28 +113,24 @@ export default {
                 data: {
                     ...state.data,
                     answers
-    
+
                 }
             }
         },
 
-        cancelBind(state,{payload}){
-            let {data:{answers}}=state;
-            answers[payload].binding='';
+        cancelBind(state, { payload }) {
+            let { data: { answers } } = state;
+            answers[payload].binding = '';
             return {
                 ...state,
-                data:{
+                data: {
                     ...state.data,
                     answers
                 }
             }
         }
 
-
-
-
-
     },
-    
+
 
 }

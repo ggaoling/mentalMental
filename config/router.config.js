@@ -30,6 +30,10 @@ export default [
           },
         ],
       },
+      // {
+      //   name: 'questionTable',
+      //   component: '../components/QuestionTable'
+      // },
 
       //user
       {
@@ -40,9 +44,9 @@ export default [
         component: './TakeTest',
       },
       {
-        path:'result',
-        name:'result',
-        component:'./Result/Success'
+        path: 'result',
+        name: 'result',
+        component: './Result/Success'
       },
 
       //admin

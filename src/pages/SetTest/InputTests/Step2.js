@@ -1,10 +1,11 @@
 import React, { Fragment } from 'react'
 import { connect } from 'dva'
-import { Form, Table, Button, Input,Modal } from 'antd';
+import { Form, Table, Button, Input, Modal, Card, Row, Divider } from 'antd';
 import styles from './style.less'
-import router from 'umi/router';
+import QuestionTable from '../components/QuestionTable'
 
-@connect(({ inputTests }) => ({ inputTests }))
+
+@connect(({ inputTests, questionTable }) => ({ inputTests, questionTable }))
 class Step2 extends React.PureComponent {
 
     constructor(props) {
@@ -12,7 +13,7 @@ class Step2 extends React.PureComponent {
     }
 
     handleBind = (type, key) => {
-        console.log(type,key)
+        console.log(type, key)
         const { dispatch } = this.props
         if (type == 1) {
             dispatch({
@@ -21,7 +22,7 @@ class Step2 extends React.PureComponent {
             })
         }
         else {
-           
+
             dispatch({
                 type: 'inputTests/cancelBind',
                 payload: key
@@ -29,40 +30,92 @@ class Step2 extends React.PureComponent {
         }
 
     }
-
-    handleInputChange = (key, value) => {
+    handleBindingInput = (key, value) => {
         const { dispatch } = this.props;
         console.log('key', key, value)
         let obj = { key: key, value: value }
         dispatch({
-            type: 'inputTests/saveInput',
+            type: 'inputTests/saveBindingInput',
             payload: obj
         })
         console.log(this.props.inputTests)
     }
+
     handleNext = () => {
-        const{dispatch}=this.props;
+        const { dispatch } = this.props;
         dispatch({
-            type:'inputTests/postData'
+            type: 'inputTests/postData'
         })
-        router.push('/setTest/inputTests/step3')
+
+    }
+
+
+
+
+    handleScoreInput = (value, key) => {
+        const { dispatch } = this.props;
+
+        dispatch({
+            type: 'inputTests/saveScoreInput',
+            payload: {
+                value: value,
+                index: key
+            }
+        })
+
+    }
+
+    handleSaveScore = (key) => {
+        console.log('key', key)
+        const { dispatch } = this.props;
+        dispatch({
+            type: 'inputTests/saveScore',
+            payload: key
+        })
+        this.handleUpdateScoreChange(key)
+    }
+
+    handleUpdateScoreChange = (index) => {
+        const { dispatch } = this.props;
+        dispatch({
+            type: 'inputTests/updateScoreChange',
+            payload: index
+        });
     }
 
     render() {
         const { inputTests, dispatch, } = this.props;
-        let { data } = inputTests
+        let { data, changeScore, score } = inputTests
         let { answers } = data
         const columns = [
-            { title: '序号', dataIndex: 'key', key: 'key',width:'5%', render: (text, record) => (`${record.key + 1}`) },
-            { title: '选项', dataIndex: 'answer', key: 'answer',width:'30%', },
-            { title: '关联问题', dataIndex: 'binding', key: 'binding', width:'30%',render: (binding, record) => (binding ? binding : <Input style={{width:'30%'}}onChange={e => this.handleInputChange(record.key, e.target.value)} />) },
-            { title: '操作', key: 'action',width:'5%', render: (text, record) => (<span>{record.binding ? <a onClick={e => this.handleBind(-1, record.key)}>解绑</a> : <a onClick={e => this.handleBind(1, record.key)}>绑定</a>}</span>) }
+            { title: '序号', dataIndex: 'key', key: 'key', width: '5%', render: (text, record) => (`${record.key + 1}`) },
+            { title: '选项', dataIndex: 'answer', key: 'answer', width: '30%', },
+            {
+                title: '分数', dataIndex: 'score', key: 'score', width: '26%',
+                render: (score, record) => (
+                    <div>
+                        {
+                            changeScore[record.key] ?
+                                (<div> <Input style={{ width: "18%" }} defaultValue={answers[record.key].score} onChange={e => this.handleScoreInput(e.target.value, record.key)} /> <Button type="primary" onClick={e => this.handleSaveScore(record.key)}>确定</Button></div>)
+                                : (<div>{score}<Button type="primary" style={{ marginLeft: '5px' }} onClick={e => this.handleUpdateScoreChange(record.key)}>修改</Button></div>)
+                        }
+                    </div>
+                )
+            },
+            { title: '关联问题', dataIndex: 'binding', key: 'binding', width: '20%', render: (binding, record) => (binding ? binding : <Input style={{ width: '20%' }} onChange={e => this.handleBindingInput(record.key, e.target.value)} />) },
+            { title: '操作', key: 'action', width: '5%', render: (text, record) => (<span>{record.binding ? <a onClick={e => this.handleBind(-1, record.key)}>解绑</a> : <a onClick={e => this.handleBind(1, record.key)}>绑定</a>}</span>) }
         ]
+        let index = 1;
+
         return (
             <div>
+
                 <div className={styles.title}>问题：{data.question}</div>
                 <Table className={styles.table} dataSource={answers} rowKey='key' columns={columns} />
                 <Button type="primary" style={{ marginLeft: '40%' }} onClick={this.handleNext}>下一步</Button>
+                <Card style={{ padding: '5px', margin: '40px 15px' }}>
+                    <QuestionTable />
+                </Card>
             </div>
 
         )
