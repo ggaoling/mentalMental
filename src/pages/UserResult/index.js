@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
+import { Card, Table, Tag } from 'antd';
 
 class UserResult extends Component {
   componentDidMount() {
@@ -10,7 +11,37 @@ class UserResult extends Component {
   }
 
   render() {
-    return <div>list</div>;
+    const { userResult: { data } } = this.props;
+    const columns = [
+      {
+        title: '学号',
+        dataIndex: 'id',
+        width: '20%'
+
+      },
+      {
+        title: '姓名',
+        dataIndex: 'name',
+        width: '20%'
+
+      },
+      {
+        title: '联系方式',
+        dataIndex: 'tel',
+        width: '20%'
+      },
+      {
+        title: '得分',
+        dataIndex: 'history',
+        width: '20%',
+        render: (record, history) => (<Tag color={Number(history) < 25 ? 'red' : 'green'}>{history}</Tag>)
+      }
+    ]
+    return (
+      <Card>
+        <Table dataSource={data} rowKey='id' columns={columns} />
+      </Card>
+    );
   }
 }
 

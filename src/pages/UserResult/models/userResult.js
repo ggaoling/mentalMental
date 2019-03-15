@@ -2,8 +2,7 @@ export default {
   namespace: 'userResult',
 
   state: {
-    questionList: null,
-    step: 1,
+    data: [],
   },
 
   effects: {
@@ -11,7 +10,7 @@ export default {
       const result = yield call();
       yield put({
         type: 'save',
-        payload: result,
+        payload: data,
       });
     },
   },
