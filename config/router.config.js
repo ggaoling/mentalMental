@@ -30,10 +30,6 @@ export default [
           },
         ],
       },
-      // {
-      //   name: 'questionTable',
-      //   component: '../components/QuestionTable'
-      // },
 
       //user
       {
@@ -43,11 +39,11 @@ export default [
         authority: ['user'],
         component: './TakeTest',
       },
-      {
-        path: 'result',
-        name: 'result',
-        component: './Result/Success'
-      },
+      // {
+      //   path: 'result',
+      //   name: 'result',
+      //   component: './Result/Success'
+      // },
 
       //admin
       {
@@ -99,54 +95,16 @@ export default [
         authority: ['admin'],
         component: './UserResult'
       },
-
-
-      // forms
       {
-        path: '/form',
-        icon: 'form',
-        name: 'form',
-        authority: ['admin'],
-        routes: [
-          {
-            path: '/form/step-form',
-            name: 'stepform',
-            component: './Forms/StepForm',
-            hideChildrenInMenu: true,
-            routes: [
-              {
-                path: '/form/step-form',
-                redirect: '/form/step-form/info',
-              },
-              {
-                path: '/form/step-form/info',
-                name: 'info',
-                component: './Forms/StepForm/Step1',
-              },
-              {
-                path: '/form/step-form/confirm',
-                name: 'confirm',
-                component: './Forms/StepForm/Step2',
-              },
-              {
-                path: '/form/step-form/result',
-                name: 'result',
-                component: './Forms/StepForm/Step3',
-              },
-            ],
-          },
-        ],
-      },
-      {
-        name: 'exception',
-        icon: 'warning',
         path: '/exception',
+        hideChildrenInMenu: true,
         routes: [
           // exception
           {
             path: '/exception/403',
             name: 'not-permission',
             component: './Exception/403',
+
           },
           {
             path: '/exception/404',

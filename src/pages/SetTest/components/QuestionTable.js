@@ -44,13 +44,13 @@ class QuestionTable extends Component {
         let index = 1;
         const qidColumns = [
             {
-                title: '序号', dataIndex: 'index', render: (record) => { return index++ }
+                title: '序号', dataIndex: 'index', width:'10%', render: (record) => { return index++ }
             },
             {
-                title: '问题', dataIndex: 'question'
+                title: '问题', dataIndex: 'question', width:'60%',
             },
             {
-                title: '问题ID', dataIndex: 'qid'
+                title: '问题ID', dataIndex: 'qid', width:'10%',
             },
             canSelect ?
                 {
@@ -66,7 +66,7 @@ class QuestionTable extends Component {
                     <Input style={{ width: '30%', margin: '30px' }} onChange={e => this.handleInput(e.target.value)} />
                     <Button type="primary" onClick={e => this.searchqid()}>查询</Button>
                 </div>
-                <Table dataSource={data} className={styles.table} columns={qidColumns} />
+                <Table dataSource={data} rowKey='qid' className={styles.table} columns={qidColumns} />
 
             </div>
         )

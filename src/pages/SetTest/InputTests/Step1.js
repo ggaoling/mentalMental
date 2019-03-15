@@ -70,9 +70,7 @@ class Step1 extends React.Component {
                 })
                 router.push('/setTest/inputTests/step2')
             }
-            else {
-
-            }
+           
         })
     }
     render() {
