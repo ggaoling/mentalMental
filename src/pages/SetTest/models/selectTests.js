@@ -1,3 +1,6 @@
+import api from '@/services/api';
+import { GET, POST } from '@/utils/request'
+
 export default {
     namespace: 'selectTests',
 
@@ -8,7 +11,8 @@ export default {
     effects: {
         *postData(_, { put, call, select }) {
             let data = select(state => state.data)
-            let result = yield call()
+            let params={data:data}
+            let result = yield call(POST,api.question.selectQuestions,params)
         }
     },
 
@@ -26,6 +30,16 @@ export default {
                 ...state,
                 data
 
+            }
+        },
+        removeOne(state, { payload }) {
+            let key = payload.qid
+            let { data } = state
+            let index = data.findIndex(item => item.qid == key)
+            data.splice(index, 1)
+            return {
+                ...state,
+                data
             }
         }
     }

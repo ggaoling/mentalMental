@@ -1,4 +1,5 @@
-import { query as queryUsers, queryCurrent } from '@/services/api';
+import api from '@/services/api';
+import { GET, POST } from '@/utils/request'
 
 export default {
   namespace: 'user',
@@ -8,22 +9,19 @@ export default {
   },
 
   effects: {
-    *fetch(_, { call, put }) {
-      const response = yield call(queryUsers);
-      yield put({
-        type: 'save',
-        payload: response,
-      });
-    },
-    *fetchCurrent(_, { call, put }) {
-      const response = yield call(queryCurrent);
+    *fetchCurrent(_, { call, put,select }) {
+      const currentUser=select(state=>state.user.currentUser)
+      let params={id:currentUser.id}
+      const response = yield call(GET,api.user.queryCurrent,params);
       yield put({
         type: 'saveCurrentUser',
         payload: response,
       });
     },
-    *updateUserInfo(_, { call, put }) {
-      const response = yield call();
+    *updateUserInfo(_, { call, put,select }) {
+      const currentUser=select(state=>state.user.currentUser)
+      let params={currentUser:currentUser}
+      const response = yield call(GET,api.user.updateUserInfo,params);
       yield put({
         type: '',
       });
@@ -37,10 +35,13 @@ export default {
         ...payload,
       };
     },
-    saveCurrentUser(state, action) {
+    saveCurrentUser(state, payload) {
       return {
         ...state,
-        currentUser: action.payload || {},
+        currentUser:{
+          ...state.currentUser,
+          ...payload
+        },
       };
     },
   },

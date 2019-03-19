@@ -9,7 +9,11 @@ class SelectTests extends Component {
     }
 
     handleRemoveOne = (record) => {
-
+        const{dispatch}=this.props
+        dispatch({
+            type:'selectTests/removeOne',
+            payload:record
+        })
     }
 
     handleSubmit = () => {
@@ -25,7 +29,7 @@ class SelectTests extends Component {
             <Card bordered={false}>
                 <Card style={{marginBottom:'30px'}}>
                     <List
-                        size="large"
+                        size="default"
                         header='已选择的题目'
                         bordered dataSource={data}
                         renderItem={item => (<List.Item key={item.qid} actions={[<a onClick={e => this.handleRemoveOne(item)}>移除这一项</a>]}>{item.qid}<Divider type='vertical'></Divider>{item.question}</List.Item>)}>

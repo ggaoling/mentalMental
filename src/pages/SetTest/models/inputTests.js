@@ -1,5 +1,6 @@
 import router from 'umi/router';
-
+import api from '@/services/api';
+import { GET, POST } from '@/utils/request'
 export default {
     namespace: 'inputTests',
 
@@ -21,7 +22,7 @@ export default {
 
         *postData({ payload }, { select, call, put }) {
             let params = select(state => state.data)
-            const result=yield call()//发送上传问题api
+            const result=yield call(POST,api.question.addQuestion,params)//发送上传问题api
             // if(result.success){
                 router.push('/setTest/inputTests/step3')
                 const data= {

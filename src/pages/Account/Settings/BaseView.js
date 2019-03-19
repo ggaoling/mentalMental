@@ -57,21 +57,21 @@ class BaseView extends Component {
       currentUser,
     } = this.props;
     const { isEdit } = account;
-    const { email, name, phone, userid } = currentUser;
+    const { email, name, phone, id } = currentUser;
     return (
       <div className={styles.baseView}>
         <div className={styles.left}>
           {isEdit ? (
             <Form layout="vertical" onSubmit={this.handleSubmit} hideRequiredMark>
               <FormItem label="学号">
-                {getFieldDecorator('userid', {
+                {getFieldDecorator('id', {
                   rules: [
                     {
                       required: true,
                       message: formatMessage({ id: 'app.settings.basic.nickname-message' }, {}),
                     },
                   ],
-                  initialValue: userid,
+                  initialValue: id,
                 })(<Input disabled={true} />)}
               </FormItem>
               <FormItem label="名字">
@@ -120,7 +120,7 @@ class BaseView extends Component {
             <div>
               <List itemLayout="horizontal" split={false}>
                 <List.Item>名字：{name}</List.Item>
-                <List.Item>学号：{userid}</List.Item>
+                <List.Item>学号：{id}</List.Item>
                 <List.Item>邮箱：{email}</List.Item>
                 <List.Item>联系方式：{phone}</List.Item>
                 <List.Item>

@@ -1,18 +1,26 @@
+import router from "umi/router";
+import api from '@/services/api';
+import { GET, POST } from '@/utils/request'
 
 export default {
   namespace: 'takeTests',
 
   state: {
     questionList: [],
-
     step: 1,
+    totalStep: 0,
     renderList: [],
-    result: []
+    result: [],
+    finished: false,
+    openTest: false
   },
 
   effects: {
-    *fetchList(_, { call, put }) {
-      // const result = yield call();
+    *fetchList(_, { call, put,select }) {
+      const currentUser=select(state=>state.user.currentUser)
+      const id=currentUser.id
+      let params={id:id}
+      // const result = yield call(GET,api.test.getTest,params);
       const result = {
         questionList: [
           {
@@ -137,13 +145,20 @@ export default {
           },
         ],
       }
-      yield put({
-        type: 'save',
-        payload: { questionList: result.questionList }
-      });
+      if (result.questionList.length > 0) {
+        const totalStep = Math.ceil(result.questionList.length / 5)
+        yield put({
+          type: 'save',
+          payload: { openTest: true, questionList: result.questionList, totalStep }
+        });
+      }
     },
+
     *postResults(_, { call, put }) {
-      const result = yield call()
+      // const result = yield call()
+      // if (result.success) {
+      yield put({ type: 'updateFinishStatus' })
+      // }
     }
   },
 
@@ -172,10 +187,10 @@ export default {
       let { step, questionList, renderList } = state
       step++;
       let newRenderList = []
-      values.map((item,index) => {
-        let aid=item.aid
+      values.map((item, index) => {
+        let aid = item.aid
         if (!Array.isArray(aid)) {
-          let answer =renderList[index].answers.find(elem => elem.aid == aid)
+          let answer = renderList[index].answers.find(elem => elem.aid == aid)
           let binding = answer.binding;
           if (binding) {
             let ind = questionList.findIndex(question => question.qid == binding)
@@ -185,7 +200,7 @@ export default {
         }
       })
       if (newRenderList.length < 5) {
-        while (newRenderList.length < 5&&questionList.length>0) {
+        while (newRenderList.length < 5 && questionList.length > 0) {
           let question = questionList.shift()
           newRenderList.unshift(question)
         }
@@ -206,7 +221,12 @@ export default {
         result
       }
     },
-
+    updateFinishStatus(state, { payload }) {
+      return {
+        ...state,
+        finished: true
+      }
+    }
 
 
   },

@@ -1,5 +1,5 @@
 export default {
-  'app.login.userName': '用户名',
+  'app.login.id': '用户名',
   'app.login.password': '密码',
   'app.login.message-invalid-credentials': '账户或密码错误（admin/ant.design）',
   'app.login.message-invalid-verification-code': '验证码错误',

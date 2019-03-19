@@ -1,4 +1,7 @@
+import api from '@/services/api'
+import {GET,POST} from '@/utils/request'
 export default {
+
   namespace: 'userResult',
 
   state: {
@@ -6,8 +9,8 @@ export default {
   },
 
   effects: {
-    *fetchList(_, { call, put }) {
-      const result = yield call();
+    *fetchList(_, { call, put ,select}) {
+      const result = yield call(GET,api.user.queryAllUsers);
       yield put({
         type: 'save',
         payload: data,

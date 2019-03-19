@@ -107,7 +107,6 @@ class Step1 extends React.Component {
             <Form layout="horizontal" className={styles.stepForm} onSubmit={this.handleSubmit}>
                 <Form.Item {...formItemLayout} label="问题">
                     {getFieldDecorator('question', {
-                        initialValue: data.question,
                         rules: [
                             { required: true, message: '请输入问题' },
                             { max: 60, message: '最多输入60个字符' }],
@@ -116,7 +115,6 @@ class Step1 extends React.Component {
                 <Form.Item {...formItemLayout} label="重要性">
                     {
                         getFieldDecorator('importance', {
-                            initialValue: data.importance,
                             rules: [
                                 { required: true, message: '请输入该问题重要性' }
                             ]

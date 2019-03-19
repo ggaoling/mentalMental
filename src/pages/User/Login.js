@@ -14,14 +14,10 @@ const { Tab, UserName, Password, Mobile, Captcha, Submit } = Login;
 }))
 class LoginPage extends Component {
   state = {
-    type: 'account',
     autoLogin: true,
   };
 
-  onTabChange = type => {
-    this.setState({ type });
-  };
-
+ 
   onGetCaptcha = () =>
     new Promise((resolve, reject) => {
       this.loginForm.validateFields(['mobile'], {}, (err, values) => {
@@ -40,14 +36,12 @@ class LoginPage extends Component {
     });
 
   handleSubmit = (err, values) => {
-    const { type } = this.state;
     if (!err) {
       const { dispatch } = this.props;
       dispatch({
         type: 'login/login',
         payload: {
           ...values,
-          type,
         },
       });
     }
@@ -65,12 +59,10 @@ class LoginPage extends Component {
 
   render() {
     const { login, submitting } = this.props;
-    const { type, autoLogin } = this.state;
+    const { autoLogin } = this.state;
     return (
       <div className={styles.main}>
         <Login
-          defaultActiveKey={type}
-          onTabChange={this.onTabChange}
           onSubmit={this.handleSubmit}
           ref={form => {
             this.loginForm = form;
@@ -80,8 +72,8 @@ class LoginPage extends Component {
             !submitting &&
             this.renderMessage(formatMessage({ id: 'app.login.message-invalid-credentials' }))}
           <UserName
-            name="userName"
-            placeholder={`${formatMessage({ id: 'app.login.userName' })}`}
+            name="id"
+            placeholder={`${formatMessage({ id: 'app.login.id' })}`}
             rules={[
               {
                 required: true,

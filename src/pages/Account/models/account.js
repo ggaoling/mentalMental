@@ -3,14 +3,10 @@ export default {
 
   state: {
     isEdit: false,
-    info: null,
   },
 
   effects: {
-    *postAccountInfo(_, { call, put }) {
-      const result = yield call();
-      yield put({});
-    },
+   
   },
 
   reducers: {

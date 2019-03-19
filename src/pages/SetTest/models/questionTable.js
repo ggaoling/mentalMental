@@ -1,3 +1,6 @@
+import api from '@/services/api';
+import { GET, POST } from '@/utils/request'
+
 export default {
     namespace: 'questionTable',
     state: {
@@ -10,8 +13,10 @@ export default {
     },
 
     effects: {
-        *searchByName(_, { call, put }) {
-            const result = yield call()
+        *searchByName(_, { call, put ,select}) {
+            let questionTable=select(state=>state.questionTable)
+            let params={questionName:questionTable.questionName}
+            const result = yield call(GET,api.question.queryQuestionsByName,params)
             put({
                 type: 'save',
                 payload: {

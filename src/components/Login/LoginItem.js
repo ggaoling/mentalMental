@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Form, Input, Button, Row, Col } from 'antd';
-import omit from 'omit.js';
 import styles from './index.less';
 import ItemMap from './map';
 import LoginContext from './loginContext';
@@ -95,28 +94,6 @@ class WrapFormItem extends Component {
     const options = this.getFormItemOptions(this.props);
 
     const otherProps = restProps || {};
-    if (type === 'Captcha') {
-      const inputProps = omit(otherProps, ['onGetCaptcha', 'countDown']);
-      return (
-        <FormItem>
-          <Row gutter={8}>
-            <Col span={16}>
-              {getFieldDecorator(name, options)(<Input {...customprops} {...inputProps} />)}
-            </Col>
-            <Col span={8}>
-              <Button
-                disabled={count}
-                className={styles.getCaptcha}
-                size="large"
-                onClick={this.onGetCaptcha}
-              >
-                {count ? `${count} ${getCaptchaSecondText}` : getCaptchaButtonText}
-              </Button>
-            </Col>
-          </Row>
-        </FormItem>
-      );
-    }
     return (
       <FormItem>
         {getFieldDecorator(name, options)(<Input {...customprops} {...otherProps} />)}

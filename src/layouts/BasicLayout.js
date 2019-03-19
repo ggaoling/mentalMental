@@ -210,7 +210,5 @@ export default connect(({ global, setting, menu }) => ({
   breadcrumbNameMap: menu.breadcrumbNameMap,
   ...setting,
 }))(props => (
-  <Media query="(max-width: 599px)">
-    {isMobile => <BasicLayout {...props} isMobile={isMobile} />}
-  </Media>
+  <BasicLayout {...props}  />
 ));
