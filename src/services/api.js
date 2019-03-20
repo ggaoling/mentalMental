@@ -1,7 +1,7 @@
 import { stringify } from 'qs';
 import request from '@/utils/request';
 
-const baseUrl = "http://localhost:8000"
+const baseUrl = "http://localhost:8080"
 
 export default {
   //登陆

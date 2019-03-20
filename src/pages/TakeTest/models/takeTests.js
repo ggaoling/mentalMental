@@ -182,6 +182,13 @@ export default {
         renderList: renderList
       }
     },
+
+    /**
+     * 
+     * @param {*} state 
+     * @param {*} param1 
+     * 更新下一页的renderList并且删剪处理questionList
+     */
     stepNext(state, { payload }) {
       let values = payload
       let { step, questionList, renderList } = state
@@ -212,6 +219,12 @@ export default {
         questionList
       }
     },
+    /**
+     * 
+     * @param {*} state 
+     * @param {*} param1 
+     * 只保存选择答案
+     */
     saveResult(state, { payload }) {
       let values = payload
       let { result, renderList } = state

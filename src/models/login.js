@@ -5,6 +5,7 @@ import { GET, POST } from '@/utils/request'
 import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 import { reloadAuthorized } from '@/utils/Authorized';
+import md5 from 'md5'
 
 export default {
   namespace: 'login',
@@ -15,10 +16,11 @@ export default {
 
   effects: {
     *login({ payload }, { call, put }) {
-      // const response = yield call(POST,api.login.logon, payload);
-      console.log(payload)
+      let password=payload.password
+      // let id=Number(payload.id);
+      payload = { ...payload, password:md5(password)}
       const response = yield call(POST, api.login.logon, payload)
-      if (response.status=='ok') {
+      if (response.status == 'ok') {
         yield put({
           type: 'changeLoginStatus',
           payload: response,
