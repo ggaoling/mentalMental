@@ -20,7 +20,7 @@ export default {
       // let id=Number(payload.id);
       payload = { ...payload, password:md5(password)}
       const response = yield call(POST, api.login.logon, payload)
-      if (response.status == 'ok') {
+      if (response.error == 'success') {
         yield put({
           type: 'changeLoginStatus',
           payload: response,

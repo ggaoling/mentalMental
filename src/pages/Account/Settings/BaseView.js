@@ -8,13 +8,13 @@ import styles from './BaseView.less';
 const FormItem = Form.Item;
 const { Option } = Select;
 
-const validatorPhone = (rule, value, callback) => {
+const validatortel = (rule, value, callback) => {
   const values = value.split('-');
   if (!values[0]) {
     callback('Please input your area code!');
   }
   if (!values[1]) {
-    callback('Please input your phone number!');
+    callback('Please input your tel number!');
   }
   callback();
 };
@@ -44,7 +44,7 @@ class BaseView extends Component {
     e.preventDefault();
     const { form, currentUser, dispatch } = this.props;
     this.handleEdit();
-    form.getFieldsValue(['phone', 'email']);
+    form.getFieldsValue(['tel', 'email']);
     dispatch({
       type: 'user/updateUserInfo',
     });
@@ -57,14 +57,14 @@ class BaseView extends Component {
       currentUser,
     } = this.props;
     const { isEdit } = account;
-    const { email, name, phone, id } = currentUser;
+    const { email, name, tel, uid, } = currentUser;
     return (
       <div className={styles.baseView}>
         <div className={styles.left}>
           {isEdit ? (
             <Form layout="vertical" onSubmit={this.handleSubmit} hideRequiredMark>
               <FormItem label="学号">
-                {getFieldDecorator('id', {
+                {getFieldDecorator('uid', {
                   rules: [
                     {
                       required: true,
@@ -97,16 +97,16 @@ class BaseView extends Component {
                 })(<Input />)}
               </FormItem>
 
-              <FormItem label={formatMessage({ id: 'app.settings.basic.phone' })}>
-                {getFieldDecorator('phone', {
+              <FormItem label={formatMessage({ id: 'app.settings.basic.tel' })}>
+                {getFieldDecorator('tel', {
                   rules: [
                     {
                       required: true,
-                      message: formatMessage({ id: 'app.settings.basic.phone-message' }, {}),
+                      message: formatMessage({ id: 'app.settings.basic.tel-message' }, {}),
                     },
-                    { validator: validatorPhone },
+                    { validator: validatortel },
                   ],
-                  initialValue: phone,
+                  initialValue: tel,
                 })(<Input />)}
               </FormItem>
               <Button type="primary" htmlType="submit">
@@ -122,7 +122,7 @@ class BaseView extends Component {
                 <List.Item>名字：{name}</List.Item>
                 <List.Item>学号：{id}</List.Item>
                 <List.Item>邮箱：{email}</List.Item>
-                <List.Item>联系方式：{phone}</List.Item>
+                <List.Item>联系方式：{tel}</List.Item>
                 <List.Item>
                   <Button onClick={this.handleEdit}>更改资料</Button>
                 </List.Item>
