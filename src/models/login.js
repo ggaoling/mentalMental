@@ -6,7 +6,7 @@ import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 import { reloadAuthorized } from '@/utils/Authorized';
 import md5 from 'md5'
-
+import { message } from 'antd'
 export default {
   namespace: 'login',
 
@@ -16,14 +16,17 @@ export default {
 
   effects: {
     *login({ payload }, { call, put }) {
-      let password=payload.password
+      let password = payload.password
       // let id=Number(payload.id);
-      payload = { ...payload, password:md5(password)}
+      payload = { ...payload, password: md5(password) }
       const response = yield call(POST, api.login.logon, payload)
       if (response.error == 'success') {
+        const { result } = response;
+        const { id } = result
+        window.localStorage.setItem('uid', JSON.stringify(id));
         yield put({
           type: 'changeLoginStatus',
-          payload: response,
+          payload: result,
         });
 
         reloadAuthorized();
@@ -44,10 +47,13 @@ export default {
         // }
         yield put({
           type: 'user/saveCurrentUser',
-          payload: { id: payload.id }
+          payload: result
         })
         yield put(routerRedux.replace('/'));
 
+      }
+      else {
+        message.error(response.error)
       }
     },
 

@@ -88,7 +88,6 @@ export function request(url, option) {
   //   newOptions.method === 'DELETE'
   // ) {
     if (!(newOptions.body instanceof FormData)) {
-      console.log('!!')
       newOptions.headers = {
         Accept: 'application/json',
         'Content-Type': 'application/json; charset=utf-8',
@@ -96,7 +95,6 @@ export function request(url, option) {
       };
       newOptions.body = JSON.stringify(newOptions.body);
     } else {
-      console.log('..')
       // newOptions.body is FormData
       newOptions.headers = {
         Accept: 'application/json',
@@ -120,7 +118,6 @@ export function request(url, option) {
       sessionStorage.removeItem(`${hashcode}:timestamp`);
     }
   }
-  console.log('oprion',newOptions)
   return fetch(url, newOptions)
     .then(checkStatus)
     .then(response => cachedSave(response, hashcode))
@@ -158,7 +155,6 @@ export function request(url, option) {
 }
 
 export function GET(url,params){
-  console.log('in')
   return request(url,{
     method:'GET',
     body:{...params} 
@@ -166,7 +162,6 @@ export function GET(url,params){
 }
 
 export function POST(url,params){
-  console.log('in')
   return request(url,{
     method:'POST',
     body:{...params}

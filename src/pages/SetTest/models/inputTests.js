@@ -1,6 +1,7 @@
 import router from 'umi/router';
 import api from '@/services/api';
 import { GET, POST } from '@/utils/request'
+import { message } from 'antd'
 export default {
     namespace: 'inputTests',
 
@@ -9,9 +10,7 @@ export default {
             question: '',
             importance: null,
             type: 1,
-            // answers: [{ answer: '1', binding: '', key: 0 ,score:0},
-            // { answer: '2', binding: '', key: 1 ,score:0}]
-            answers:[]
+            answers: []
         },
         tempBinding: [],
         score: [],
@@ -21,22 +20,32 @@ export default {
     effects: {
 
         *postData({ payload }, { select, call, put }) {
-            let params = select(state => state.data)
-            const result=yield call(POST,api.question.addQuestion,params)//发送上传问题api
-            // if(result.success){
+            let params = yield select(state => state.inputTests.data)
+            const response = yield call(POST, api.question.addQuestion, params)//发送上传问题api
+            if (response.error == "success") {
                 router.push('/setTest/inputTests/step3')
-                const data= {
-                    question: '',
-                    importance: null,
-                    type: 1,
-                    answers:[]
+                const payload = {
+                    data: {
+                        question: '',
+                        importance: null,
+                        type: 1,
+                        answers: []
+                    },
+                    tempBinding: [],
+                    score: [],
+                    changeScore: [],
                 }
                 put({
-                    type:'saveData',
-                    payload:{data:data}
+                    type: 'save',
+                    payload: payload
                 })
             }
-        // }
+            else {
+                message.error(response.error)
+            }
+        }
+
+
     },
 
     reducers: {
@@ -70,10 +79,10 @@ export default {
 
         //更新score status
         updateScoreChange(state, { payload }) {
-            let index=payload
+            let index = payload
             let { changeScore } = state;
-            let status=changeScore[index]
-            changeScore[index]=!status
+            let status = changeScore[index]
+            changeScore[index] = !status
             return {
                 ...state,
                 changeScore
@@ -93,11 +102,11 @@ export default {
 
         saveScore(state, { payload }) {
             let index = payload
-            let { data:{answers}, score } = state;
+            let { data: { answers }, score } = state;
             answers[index].score = score[index]
-            return{
+            return {
                 ...state,
-                data:{
+                data: {
                     ...state.data,
                     answers
                 }

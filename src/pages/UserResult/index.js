@@ -12,6 +12,7 @@ class UserResult extends Component {
 
   render() {
     const { userResult: { data } } = this.props;
+    console.log(data);
     const columns = [
       {
         title: '学号',
@@ -34,7 +35,7 @@ class UserResult extends Component {
         title: '得分',
         dataIndex: 'history',
         width: '20%',
-        render: (record, history) => (<Tag color={Number(history) < 25 ? 'red' : 'green'}>{history}</Tag>)
+        render: (record, history) =>{history? (<Tag color={Number(history) < 25 ? 'red' : 'green'}>{history}</Tag>):''}
       }
     ]
     return (

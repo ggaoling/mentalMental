@@ -3,7 +3,6 @@ import { formatMessage, FormattedMessage } from 'umi/locale';
 import { Form, Input, Upload, Select, Button, List } from 'antd';
 import { connect } from 'dva';
 import styles from './BaseView.less';
-// import { getTimeDistance } from '@/utils/utils';
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -19,9 +18,10 @@ const validatortel = (rule, value, callback) => {
   callback();
 };
 
-@connect(({ user, account }) => ({
+@connect(({ user, account,loading }) => ({
   currentUser: user.currentUser,
   account,
+  loading:loading.effects['user/fetchCurrent']
 }))
 @Form.create()
 class BaseView extends Component {
@@ -44,9 +44,10 @@ class BaseView extends Component {
     e.preventDefault();
     const { form, currentUser, dispatch } = this.props;
     this.handleEdit();
-    form.getFieldsValue(['tel', 'email']);
+    const values=form.getFieldsValue(['tel', 'email']);
     dispatch({
       type: 'user/updateUserInfo',
+      payload:values
     });
   };
 
@@ -57,14 +58,14 @@ class BaseView extends Component {
       currentUser,
     } = this.props;
     const { isEdit } = account;
-    const { email, name, tel, uid, } = currentUser;
+    const { email, name, tel, id, } = currentUser;
     return (
       <div className={styles.baseView}>
         <div className={styles.left}>
           {isEdit ? (
             <Form layout="vertical" onSubmit={this.handleSubmit} hideRequiredMark>
               <FormItem label="学号">
-                {getFieldDecorator('uid', {
+                {getFieldDecorator('id', {
                   rules: [
                     {
                       required: true,
@@ -102,28 +103,25 @@ class BaseView extends Component {
                   rules: [
                     {
                       required: true,
-                      message: formatMessage({ id: 'app.settings.basic.tel-message' }, {}),
+                      message: '请填写手机号码',
                     },
                     { validator: validatortel },
                   ],
                   initialValue: tel,
                 })(<Input />)}
               </FormItem>
-              <Button type="primary" htmlType="submit">
-                <FormattedMessage
-                  id="app.settings.basic.update"
-                  defaultMessage="Update Information"
-                />
-              </Button>
+              <Button type="primary" onClick={this.handleEdit} style={{marginRight:'10px'}}>取消</Button>
+              <Button type="primary" htmlType="submit">提交</Button>
             </Form>
           ) : (
             <div>
               <List itemLayout="horizontal" split={false}>
+              <List.Item>学号：{id}</List.Item>
                 <List.Item>名字：{name}</List.Item>
-                <List.Item>学号：{id}</List.Item>
                 <List.Item>邮箱：{email}</List.Item>
-                <List.Item>联系方式：{tel}</List.Item>
+                <List.Item>手机号：{tel}</List.Item>
                 <List.Item>
+                  
                   <Button onClick={this.handleEdit}>更改资料</Button>
                 </List.Item>
               </List>

@@ -8,9 +8,10 @@ import styles from './Info.less';
 import BaseView from './BaseView';
 const { Item } = Menu;
 
-@connect(({ user, account }) => ({
-  currentUser: user.currentUser,
+@connect(({ user, account,loading }) => ({
+  user,
   account,
+  loading:loading.effects['user/fetchCurrent']
 }))
 class Info extends Component {
   constructor(props) {
@@ -18,10 +19,11 @@ class Info extends Component {
   }
 
   render() {
-    const { children, currentUser } = this.props;
-    if (!currentUser.id) {
-      return '';
-    }
+    const { children, user } = this.props;
+    const {currentUser}=user
+    // if (!currentUser.uid) {
+    //   return '';
+    // }
     return (
       <GridContent>
         <div className={styles.main}>

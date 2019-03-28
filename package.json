@@ -1,7 +1,7 @@
 {
-  "name": "ant-design-pro",
-  "version": "2.2.0",
-  "description": "An out-of-box UI solution for enterprise applications",
+  "name": "mentalTest",
+  "version": "1.0",
+  "description": "for college students",
   "private": true,
   "scripts": {
     "presite": "cd functions && npm install",
@@ -60,7 +60,6 @@
     "less": "^3.9.0",
     "lint-staged": "^8.1.0",
     "merge-umi-mock-data": "^1.0.4",
-    "mockjs": "^1.0.1-beta3",
     "prettier": "1.15.2",
     "pro-download": "^1.0.1",
     "slash2": "^2.0.0",
@@ -99,10 +98,5 @@
     "src/**/*.less",
     "config/**/*.js*",
     "scripts/**/*.js"
-  ],
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint-staged"
-    }
-  }
+  ]
 }

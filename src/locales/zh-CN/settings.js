@@ -11,6 +11,7 @@ export default {
   'app.settings.basic.nickname-message': '请输入您的昵称!',
   'app.settings.basic.profile': '个人简介',
   'app.settings.basic.profile-message': '请输入个人简介!',
+  'app.settings.basic.tel':'手机号',
   'app.settings.basic.profile-placeholder': '个人简介',
   'app.settings.basic.country': '国家/地区',
   'app.settings.basic.country-message': '请输入您的国家或地区!',
@@ -52,4 +53,5 @@ export default {
   'app.settings.notification.todo-description': '待办任务将以站内信的形式通知',
   'app.settings.open': '开',
   'app.settings.close': '关',
+
 };

@@ -11,20 +11,20 @@ export default {
   },
   //userinfo
   user: {
-    queryCurrent: baseUrl + "/service/user/queryCurrent",//查询当前登陆用户信息
-    updateUserInfo: baseUrl + "/service/user/updateUserInfo",//更新用户信息
-    queryAllUsers: baseUrl + "/service/user/queryAllUsers",//admin查询所有学生列表
+    queryCurrent: baseUrl + "/user/queryCurrent",//查询当前登陆用户信息
+    updateUserInfo: baseUrl + "/user/updateUserInfo",//更新用户信息
+    queryAllUsers: baseUrl + "/user/queryAllUsers",//admin查询所有学生列表
   },
   //questionList
   question: {
-    addQuestion: baseUrl + "/service/question/addQuestion",//新增问题 post
-    queryQuestionsByName: baseUrl + "/service/question/queryQuestionsByName",//名字模糊查询问题列表
-    selectQuestions:baseUrl + "/service/question/selectQuestions",
+    addQuestion: baseUrl + "/question/addQuestion",//新增问题 post
+    queryQuestionsByName: baseUrl + "/question/queryQuestionsByName",//名字模糊查询问题列表
+    selectQuestions:baseUrl + "/question/selectQuestions",
   },
   //test
   test:{
-    getTest:baseUrl + "/service/test/getTest",
-    submitTest:baseUrl + "/service/test/submitTest",
+    getTest:baseUrl + "/test/getTest",
+    submitTest:baseUrl + "/test/submitTest",
   }
 
 

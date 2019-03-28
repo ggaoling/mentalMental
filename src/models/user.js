@@ -9,22 +9,25 @@ export default {
   },
 
   effects: {
-    *fetchCurrent(_, { call, put,select }) {
-      const currentUser=select(state=>state.user.currentUser)
-      let params={id:currentUser.id}
-      const response = yield call(GET,api.user.queryCurrent,params);
-      yield put({
-        type: 'saveCurrentUser',
-        payload: response,
-      });
+    *fetchCurrent(_, { call, put, select }) {
+      const uid=window.localStorage.getItem("uid");
+      let params = { uid: uid }
+      const response = yield call(POST, api.user.queryCurrent, params);
+      if (response.error == "success") {
+        const{result}=response
+        yield put({
+          type: 'saveCurrentUser',
+          payload:result,
+        });
+      }
+
     },
-    *updateUserInfo(_, { call, put,select }) {
-      const currentUser=select(state=>state.user.currentUser)
-      let params={currentUser:currentUser}
-      const response = yield call(GET,api.user.updateUserInfo,params);
-      yield put({
-        type: '',
-      });
+    *updateUserInfo({payload}, { call, put, select }) {
+      const currentUser =yield select(state => state.user.currentUser)
+      console.log('pay',payload)
+      let params = { ...currentUser,...payload }
+      const response = yield call(POST, api.user.updateUserInfo, params);
+      yield put({type:'fetchCurrent'});
     },
   },
 
@@ -35,13 +38,10 @@ export default {
         ...payload,
       };
     },
-    saveCurrentUser(state, payload) {
+    saveCurrentUser(state, {payload}) {
       return {
         ...state,
-        currentUser:{
-          ...state.currentUser,
-          ...payload
-        },
+        currentUser:{...payload} 
       };
     },
   },

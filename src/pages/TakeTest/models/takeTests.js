@@ -18,8 +18,8 @@ export default {
   effects: {
     *fetchList(_, { call, put,select }) {
       const currentUser=select(state=>state.user.currentUser)
-      const id=currentUser.id
-      let params={id:id}
+      const uid=currentUser.uid
+      let params={uid:uid}
       // const result = yield call(GET,api.test.getTest,params);
       const result = {
         questionList: [
