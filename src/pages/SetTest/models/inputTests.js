@@ -17,10 +17,62 @@ export default {
         changeScore: [],
     },
 
+    subscriptions:{
+        setup({dispatch,history}){
+            history.listen((location)=>{
+                if(location.pathname==="/setTest/inputTests/step1"){
+                    dispatch({
+                        type:'inputTests/initialData',
+                        payload:1
+                    })
+                }
+            }
+            )
+        }
+    },
+
     effects: {
+        /**
+         * 
+         * @param {*} param0 
+         * @param {*} param1 
+         * 修改问题详情时根据qid获取问题详情 注入state的data
+         */
+        *initialData({payload},{call,put}){
+            const params={qid:payload}
+            let response=yield call(POST,api.question.queryQuestionByQid,params);
+            response={
+                error:'success',
+                code:200,
+                result:{
+                    question:'2',
+                    type:2,
+                    importance:3,
+                    answers:[{answer: "1", binding: "", score: "1"},
+                    {answer: "2", binding: "",  score: "2"},]
+                }
+            }
+            if(response.error==="success"){
+                const {result}=response;
+                yield put({
+                    type:'saveData',
+                    payload:result
+                })
+            }
+            else{
+                message.error(response.error)
+            }
+        },
 
         *postData({ payload }, { select, call, put }) {
-            let params = yield select(state => state.inputTests.data)
+            let data = yield select(state => state.inputTests.data)
+            const{question,type,importance,answers}=data;
+            let params = {
+                question:question,
+                type:type,
+                importance:importance,
+                answers:answers
+            }
             const response = yield call(POST, api.question.addQuestion, params)//发送上传问题api
             if (response.error == "success") {
                 router.push('/setTest/inputTests/step3')

@@ -85,7 +85,12 @@ export default [
             path: '/setTest/selectTests',
             name: 'selectTests',
             component: './SetTest/SelectTests'
-          }
+          },
+          {
+            path: '/setTest/updateQuestion',
+            name: 'updateQuestion',
+            component: './SetTest/UpdateQuestion'
+          },
         ]
       },
       {

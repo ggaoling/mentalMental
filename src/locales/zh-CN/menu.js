@@ -41,6 +41,7 @@ export default {
   'menu.setTest.inputTests.step2':'上传题目(设置关联问题)',
   'menu.setTest.inputTests.step3':'上传题目(完成)',
   'menu.setTest.selectTests':'制作问卷',
+  'menu.setTest.updateQuestion':'问题列表',
   'menu.userResult':'学生试题结果',
   'menu.takeTest':'测试题',
 

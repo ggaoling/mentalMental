@@ -9,6 +9,8 @@ class InputTests extends Component {
         super(props)
     }
 
+    
+
     getCurrentStep=()=> {
         const { location: { pathname } } = this.props
         const pathList = pathname.split('/');

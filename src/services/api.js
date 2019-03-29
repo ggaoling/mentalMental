@@ -20,6 +20,7 @@ export default {
     addQuestion: baseUrl + "/question/addQuestion",//新增问题 post
     queryQuestionsByName: baseUrl + "/question/queryQuestionsByName",//名字模糊查询问题列表
     selectQuestions:baseUrl + "/question/selectQuestions",
+    queryQuestionByQid:baseUrl+"/question/queryQuestionByQid"//根据qid获取问题详情
   },
   //test
   test:{

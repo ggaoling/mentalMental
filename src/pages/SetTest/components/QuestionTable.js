@@ -39,7 +39,7 @@ class QuestionTable extends Component {
         }
     }
     render() {
-        const { questionTable, dispatch, canSelect } = this.props
+        const { questionTable, dispatch, canSelect,action} = this.props
         let { data, questionName } = questionTable
         let index = 1;
         const qidColumns = [
@@ -47,17 +47,23 @@ class QuestionTable extends Component {
                 title: '序号', dataIndex: 'index', width:'10%', render: (record) => { return index++ }
             },
             {
-                title: '问题', dataIndex: 'question', width:'60%',
+                title: '问题ID', dataIndex: 'qid', width:'10%',
             },
             {
-                title: '问题ID', dataIndex: 'qid', width:'10%',
+                title: '问题', dataIndex: 'question', width:'60%',
             },
             canSelect ?
                 {
                     title: '操作', render: (record) => (
                         <a onClick={e => this.handleAdd(record)}>添加这一项</a>
                     )
-                } : {}
+                } : {},
+            action?
+            {
+                title:'操作',render:(record)=>(
+                    <a onClick={e=>action.func(record)}>{action.name}</a>
+                )
+            }:{}
         ]
 
         return (

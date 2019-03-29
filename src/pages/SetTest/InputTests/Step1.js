@@ -28,6 +28,16 @@ class Step1 extends React.Component {
     constructor(props) {
         super(props)
     }
+    componentDidMount(){
+        const{dispatch}=this.props;
+        const {query}=location
+        console.log('query',query)
+        dispatch({
+            type:'inputTests/initialData',
+            payload:1
+        })
+    }
+
     remove = (k) => {
         const { form } = this.props;
         const keys = form.getFieldValue('keys');
@@ -76,7 +86,22 @@ class Step1 extends React.Component {
     render() {
         const { inputTests: { data }, dispatch, form } = this.props;
         const { getFieldDecorator, validateFields, getFieldValue } = form;
-        getFieldDecorator('keys', { initialValue: [0, 1] });
+        let {
+            question,
+            type,
+            importance,
+            answers
+        }=data;
+        const keys=[]
+        if(answers.length>0){
+            for(let i=0;i<answers.length;i++){
+                keys.push(i);
+            }
+        }
+        else{
+            keys.push([1,2])
+        }
+        getFieldDecorator('keys', { initialValue: keys });
         const keys = getFieldValue('keys');
 
         const answerItems = keys.map((k, index) => (
