@@ -1,28 +1,42 @@
 import api from '@/services/api'
-import {GET,POST} from '@/utils/request'
-import {message} from 'antd'
+import { GET, POST } from '@/utils/request'
+import { message } from 'antd'
 export default {
 
   namespace: 'userResult',
 
   state: {
     data: [],
+    pagination: {
+      pageNo: 1,
+      pageSize: 10,
+      total: 0
+    },
   },
 
   effects: {
-    *fetchList(_, { call, put ,select}) {
-      const response = yield call(POST,api.user.queryAllUsers);
-      if(response.error=="success"){
-        const {result}=response;
+    *fetchList({payload}, { call, put, select }) {
+      const userResult  = yield select(state => state.userResult)
+      const { pagination } = userResult
+      const params = { pageNo: pagination.pageNo - 1 }
+      const response = yield call(POST, api.user.queryAllUsers, params);
+      if (response.error == "success") {
+        const { result } = response;
         yield put({
-          type: 'saveData',
-          payload:result ,
+          type: 'save',
+          payload: {
+            data: result.content,
+            pagination: {
+              ...pagination,
+              total: result.totalElements
+            }
+          }
         });
       }
-      else{
+      else {
         message.error(response.error)
       }
-      
+
     },
   },
 
@@ -34,13 +48,12 @@ export default {
       };
     },
     saveData(state, { payload }) {
-      console.log("123")
       return {
         ...state,
-        data:payload
+        data: payload
       };
     },
   },
-  
+
 
 };

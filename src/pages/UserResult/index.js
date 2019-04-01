@@ -10,9 +10,24 @@ class UserResult extends Component {
     });
   }
 
+  handleTableChange=(pagi)=>{
+    const{dispatch,userResult:{pagination}}=this.props;
+    dispatch({
+        type:'userResult/save',
+        payload:{
+            pagination:{
+                ...pagination,
+                pageNo:pagi.current,
+                pageSize:pagi.pageSize
+            }
+        }
+    })
+    dispatch({
+        type:'userResult/fetchList'
+    })
+}
   render() {
-    const { userResult: { data } } = this.props;
-    console.log(data);
+    const { userResult: { data ,pagination} } = this.props;
     const columns = [
       {
         title: '学号',
@@ -40,7 +55,7 @@ class UserResult extends Component {
     ]
     return (
       <Card>
-        <Table dataSource={data} rowKey='id' columns={columns} />
+        <Table dataSource={data} rowKey='id' columns={columns} pagination={pagination} onChange={this.handleTableChange}/>
       </Card>
     );
   }
@@ -48,5 +63,6 @@ class UserResult extends Component {
 
 export default connect(({ userResult, loading }) => ({
   userResult,
-  loading: loading.effects['userResult/fetchList'],
+  loading
+  // loading: loading.effects['userResult/fetchList'],
 }))(UserResult);

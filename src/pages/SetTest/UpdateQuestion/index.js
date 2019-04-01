@@ -7,7 +7,6 @@ import router from 'umi/router'
 class UpdateQuestion extends Component {
 
     handleUpdateDetail=(record)=>{
-        console.log("qid",record)
         const {qid}=record;
         router.replace(`/setTest/inputTests/step1?qid=${qid}`);
     }
@@ -24,4 +23,4 @@ class UpdateQuestion extends Component {
         }
 }
 
-export default connect(({})=>({}))(UpdateQuestion)
+export default connect(({questionTable})=>({questionTable}))(UpdateQuestion)

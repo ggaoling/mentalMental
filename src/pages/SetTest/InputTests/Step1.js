@@ -4,7 +4,7 @@ import { Form, Input, Button, Icon, Radio, Col, Modal, InputNumber } from 'antd'
 import router from 'umi/router';
 import styles from './style.less'
 
-let id = 2;
+
 const formItemLayout = {
     labelCol: {
         span: 5,
@@ -28,15 +28,6 @@ class Step1 extends React.Component {
     constructor(props) {
         super(props)
     }
-    componentDidMount(){
-        const{dispatch}=this.props;
-        const {query}=location
-        console.log('query',query)
-        dispatch({
-            type:'inputTests/initialData',
-            payload:1
-        })
-    }
 
     remove = (k) => {
         const { form } = this.props;
@@ -51,9 +42,16 @@ class Step1 extends React.Component {
     }
 
     add = () => {
-        const { form } = this.props;
+        const { form, inputTests, dispatch } = this.props;
+        let { id } = inputTests
         const keys = form.getFieldValue('keys');
-        const nextKeys = keys.concat(id++);
+        const nextKeys = keys.concat(++id);
+        dispatch({
+            type: 'inputTests/save',
+            payload: {
+                id: id
+            }
+        })
         form.setFieldsValue({
             keys: nextKeys,
         });
@@ -61,47 +59,60 @@ class Step1 extends React.Component {
     onValiedateForm = () => {
         const { form, dispatch, inputTests } = this.props;
         let { validateFields } = form
-        let { data } = inputTests
+        let { data, qid } = inputTests
+        let { answers } = data
         validateFields((err, values) => {
             if (!err) {
+                let changeScore = new Array(values.answers.length)
                 values.answers = values.answers.map((ele, index) => {
                     let obj = {};
                     obj.answer = ele;
-                    obj.binding = '';
+                    obj.binding = 0;
+                    obj.qratio = 0;
                     obj.key = index;
-                    obj.score = 0;
+                    if (answers.length > 0) {
+                        obj.qid = qid
+                    }
+                    if (answers.length > 0 && index < answers.length) {
+                        obj.aid = answers[index].aid
+                        obj.binding = answers[index].binding;
+                        obj.qratio = answers[index].qratio;
+                    }
                     return obj
                 })
-                let changeScore=new Array(values.answers.length)
-                changeScore.fill(true)
+                changeScore.fill(false)
                 dispatch({
                     type: 'inputTests/save',
-                    payload: { data: { ...values },changeScore:changeScore },
+                    payload: { data: { ...values }, changeScore: changeScore },
                 })
-                router.push('/setTest/inputTests/step2')
+                let url = '/setTest/inputTests/step2'
+                if (qid) {
+                    url += `?qid=${qid}`
+                }
+                router.push(url)
             }
-           
+
         })
     }
     render() {
-        const { inputTests: { data }, dispatch, form } = this.props;
+        const { inputTests: { data, fixId }, dispatch, form } = this.props;
         const { getFieldDecorator, validateFields, getFieldValue } = form;
         let {
-            question,
-            type,
-            importance,
-            answers
-        }=data;
-        const keys=[]
-        if(answers.length>0){
-            for(let i=0;i<answers.length;i++){
-                keys.push(i);
+            question = '',
+            type = 1,
+            importance = 0,
+            answers = []
+        } = data;
+        let keysArray = []
+        if (answers.length > 0) {
+            for (let i = 0; i < answers.length; i++) {
+                keysArray[i]=i;
             }
         }
-        else{
-            keys.push([1,2])
+        else {
+            keysArray=[0, 1]
         }
-        getFieldDecorator('keys', { initialValue: keys });
+        getFieldDecorator('keys', { initialValue: keysArray });
         const keys = getFieldValue('keys');
 
         const answerItems = keys.map((k, index) => (
@@ -118,7 +129,8 @@ class Step1 extends React.Component {
                     }, {
                         max: 40, message: '最多输入40个字符'
                     }],
-                    onValidateTrigger: ['onChange', 'onBlur']
+                    onValidateTrigger: ['onChange', 'onBlur'],
+                    initialValue: answers.length > 0 && index < fixId ? answers[index].answer : null
                 })(
                     <Input placeholder="option" style={{ width: '80%', marginRight: 8 }} />
                 )}
@@ -135,6 +147,7 @@ class Step1 extends React.Component {
                         rules: [
                             { required: true, message: '请输入问题' },
                             { max: 60, message: '最多输入60个字符' }],
+                        initialValue: question
                     })(<Input />)}
                 </Form.Item>
                 <Form.Item {...formItemLayout} label="重要性">
@@ -142,13 +155,14 @@ class Step1 extends React.Component {
                         getFieldDecorator('importance', {
                             rules: [
                                 { required: true, message: '请输入该问题重要性' }
-                            ]
+                            ],
+                            initialValue: importance
                         })(<InputNumber />)
                     }
                 </Form.Item>
                 <Form.Item {...formItemLayout} label='类型'>
                     {getFieldDecorator('type', {
-                        initialValue: data.type,
+                        initialValue: type,
                         rules: [{
                             required: true, message: '若不选择则默认单选'
                         }]

@@ -28,120 +28,120 @@ export default {
             question: 'qqqqqqqqqqqqqqqqqqqq1',
             importance: 1,
             type: 2,
-            answers: [{ qoption: '1', binding: '', aid: 10, score: 10 },
-            { qoption: '2', binding: '', aid: 11, score: 20 },
-            { qoption: '1', binding: '', aid: 12, score: 30 },
-            { qoption: '1', binding: '', aid: 13, score: 40 },]
+            answers: [{ qoption: '1', binding: '', aid: 10, qratio: 10 },
+            { qoption: '2', binding: '', aid: 11, qratio: 20 },
+            { qoption: '1', binding: '', aid: 12, qratio: 30 },
+            { qoption: '1', binding: '', aid: 13, qratio: 40 },]
           },
           {
             qid: '02',
             question: 'qqqqqqqqqqqqqqqqqqqq2',
             importance: 1,
             type: 1,
-            answers: [{ qoption: '1', binding: '', aid: 20, score: 10 },
-            { qoption: '2', binding: '07', aid: 21, score: 20 },
-            { qoption: '1', binding: '', aid: 22, score: 30 },
-            { qoption: '1', binding: '011', aid: 23, score: 40 },]
+            answers: [{ qoption: '1', binding: '', aid: 20, qratio: 10 },
+            { qoption: '2', binding: '07', aid: 21, qratio: 20 },
+            { qoption: '1', binding: '', aid: 22, qratio: 30 },
+            { qoption: '1', binding: '011', aid: 23, qratio: 40 },]
           },
           {
             qid: '03',
             question: 'qqqqqqqqqqqqqqqqqqqq3',
             importance: 1,
             type: 1,
-            answers: [{ qoption: '1', binding: '', aid: 30, score: 10 },
-            { qoption: '2', binding: '', aid: 31, score: 20 },
-            { qoption: '1', binding: '', aid: 32, score: 30 },
-            { qoption: '1', binding: '', aid: 33, score: 40 },]
+            answers: [{ qoption: '1', binding: '', aid: 30, qratio: 10 },
+            { qoption: '2', binding: '', aid: 31, qratio: 20 },
+            { qoption: '1', binding: '', aid: 32, qratio: 30 },
+            { qoption: '1', binding: '', aid: 33, qratio: 40 },]
           },
           {
             qid: '04',
             question: 'qqqqqqqqqqqqqqqqqqqq4',
             importance: 1,
             type: 2,
-            answers: [{ qoption: '1', binding: '', aid: 0, score: 10 },
-            { qoption: '2', binding: '', aid: 1, score: 20 },
-            { qoption: '1', binding: '', aid: 2, score: 30 },
-            { qoption: '1', binding: '', aid: 3, score: 40 },]
+            answers: [{ qoption: '1', binding: '', aid: 0, qratio: 10 },
+            { qoption: '2', binding: '', aid: 1, qratio: 20 },
+            { qoption: '1', binding: '', aid: 2, qratio: 30 },
+            { qoption: '1', binding: '', aid: 3, qratio: 40 },]
           },
           {
             qid: '05',
             question: 'qqqqqqqqqqqqqqqqqqqq6',
             importance: 1,
             type: 1,
-            answers: [{ qoption: '1', binding: '', aid: 0, score: 10 },
-            { qoption: '2', binding: '', aid: 1, score: 20 },
-            { qoption: '1', binding: '', aid: 2, score: 30 },
-            { qoption: '1', binding: '', aid: 3, score: 40 },]
+            answers: [{ qoption: '1', binding: '', aid: 0, qratio: 10 },
+            { qoption: '2', binding: '', aid: 1, qratio: 20 },
+            { qoption: '1', binding: '', aid: 2, qratio: 30 },
+            { qoption: '1', binding: '', aid: 3, qratio: 40 },]
           },
           {
             qid: '06',
             question: 'qqqqqqqqqqqqqqqqqqqq7',
             importance: 1,
             type: 2,
-            answers: [{ qoption: '1', binding: '', aid: 0, score: 10 },
-            { qoption: '2', binding: '', aid: 1, score: 20 },
-            { qoption: '1', binding: '', aid: 2, score: 30 },
-            { qoption: '1', binding: '', aid: 3, score: 40 },]
+            answers: [{ qoption: '1', binding: '', aid: 0, qratio: 10 },
+            { qoption: '2', binding: '', aid: 1, qratio: 20 },
+            { qoption: '1', binding: '', aid: 2, qratio: 30 },
+            { qoption: '1', binding: '', aid: 3, qratio: 40 },]
           },
           {
             qid: '07',
             question: 'qqqqqqqqqqqqqqqqqqqq8',
             importance: 1,
             type: 1,
-            answers: [{ qoption: '1', binding: '', aid: 0, score: 10 },
-            { qoption: '2', binding: '', aid: 1, score: 20 },
-            { qoption: '1', binding: '', aid: 2, score: 30 },
-            { qoption: '1', binding: '', aid: 3, score: 40 },]
+            answers: [{ qoption: '1', binding: '', aid: 0, qratio: 10 },
+            { qoption: '2', binding: '', aid: 1, qratio: 20 },
+            { qoption: '1', binding: '', aid: 2, qratio: 30 },
+            { qoption: '1', binding: '', aid: 3, qratio: 40 },]
           },
           {
             qid: '08',
             question: 'qqqqqqqqqqqqqqqqqqqq9',
             importance: 1,
             type: 1,
-            answers: [{ qoption: '1', binding: '', aid: 0, score: 10 },
-            { qoption: '2', binding: '', aid: 1, score: 20 },
-            { qoption: '1', binding: '', aid: 2, score: 30 },
-            { qoption: '1', binding: '', aid: 3, score: 40 },]
+            answers: [{ qoption: '1', binding: '', aid: 0, qratio: 10 },
+            { qoption: '2', binding: '', aid: 1, qratio: 20 },
+            { qoption: '1', binding: '', aid: 2, qratio: 30 },
+            { qoption: '1', binding: '', aid: 3, qratio: 40 },]
           },
           {
             qid: '09',
             question: 'qqqqqqqqqqqqqqqqqqqq10',
             importance: 1,
             type: 1,
-            answers: [{ qoption: '1', binding: '', aid: 0, score: 10 },
-            { qoption: '2', binding: '', aid: 1, score: 20 },
-            { qoption: '1', binding: '', aid: 2, score: 30 },
-            { qoption: '1', binding: '', aid: 3, score: 40 },]
+            answers: [{ qoption: '1', binding: '', aid: 0, qratio: 10 },
+            { qoption: '2', binding: '', aid: 1, qratio: 20 },
+            { qoption: '1', binding: '', aid: 2, qratio: 30 },
+            { qoption: '1', binding: '', aid: 3, qratio: 40 },]
           },
           {
             qid: '10',
             question: 'qqqqqqqqqqqqqqqqqqqq11',
             importance: 1,
             type: 1,
-            answers: [{ qoption: '1', binding: '', aid: 0, score: 10 },
-            { qoption: '2', binding: '', aid: 1, score: 20 },
-            { qoption: '1', binding: '', aid: 2, score: 30 },
-            { qoption: '1', binding: '', aid: 3, score: 40 },]
+            answers: [{ qoption: '1', binding: '', aid: 0, qratio: 10 },
+            { qoption: '2', binding: '', aid: 1, qratio: 20 },
+            { qoption: '1', binding: '', aid: 2, qratio: 30 },
+            { qoption: '1', binding: '', aid: 3, qratio: 40 },]
           },
           {
             qid: '011',
             question: 'qqqqqqqqqqqqqqqqqqqq12',
             importance: 1,
             type: 1,
-            answers: [{ qoption: '1', binding: '', aid: 0, score: 10 },
-            { qoption: '2', binding: '', aid: 1, score: 20 },
-            { qoption: '1', binding: '', aid: 2, score: 30 },
-            { qoption: '1', binding: '', aid: 3, score: 40 },]
+            answers: [{ qoption: '1', binding: '', aid: 0, qratio: 10 },
+            { qoption: '2', binding: '', aid: 1, qratio: 20 },
+            { qoption: '1', binding: '', aid: 2, qratio: 30 },
+            { qoption: '1', binding: '', aid: 3, qratio: 40 },]
           },
           {
             qid: '012',
             question: 'qqqqqqqqqqqqqqqqqqqq13',
             importance: 1,
             type: 2,
-            answers: [{ qoption: '1', binding: '', aid: 0, score: 10 },
-            { qoption: '2', binding: '', aid: 1, score: 20 },
-            { qoption: '1', binding: '', aid: 2, score: 30 },
-            { qoption: '1', binding: '', aid: 3, score: 40 },]
+            answers: [{ qoption: '1', binding: '', aid: 0, qratio: 10 },
+            { qoption: '2', binding: '', aid: 1, qratio: 20 },
+            { qoption: '1', binding: '', aid: 2, qratio: 30 },
+            { qoption: '1', binding: '', aid: 3, qratio: 40 },]
           },
         ],
       }

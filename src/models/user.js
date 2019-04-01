@@ -24,7 +24,6 @@ export default {
     },
     *updateUserInfo({payload}, { call, put, select }) {
       const currentUser =yield select(state => state.user.currentUser)
-      console.log('pay',payload)
       let params = { ...currentUser,...payload }
       const response = yield call(POST, api.user.updateUserInfo, params);
       yield put({type:'fetchCurrent'});
