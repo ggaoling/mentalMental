@@ -15,20 +15,14 @@ export default [
     Routes: ['src/pages/Authorized'],
     authority: ['admin', 'user'],
     routes: [
-      { path: '/', redirect: '/account/settings' },
+      { path: '/', redirect: '/account' },
       //user&admin
       {
         name: 'account',
         icon: 'user',
         path: '/account',
         authority: ['admin', 'user'],
-        routes: [
-          {
-            path: '/account/settings',
-            name: 'settings',
-            component: './Account/Settings/Info',
-          },
-        ],
+        component: './Account/Settings/Info',
       },
 
       //user
@@ -39,11 +33,6 @@ export default [
         authority: ['user'],
         component: './TakeTest',
       },
-      // {
-      //   path: 'result',
-      //   name: 'result',
-      //   component: './Result/Success'
-      // },
 
       //admin
       {
@@ -51,7 +40,6 @@ export default [
         icon: 'form',
         name: 'setTest',
         authority: ['admin'],
-        // hideChildrenInMenu:true,
         routes: [
           {
             path: '/setTest/inputTests',
@@ -84,7 +72,23 @@ export default [
           {
             path: '/setTest/selectTests',
             name: 'selectTests',
-            component: './SetTest/SelectTests'
+            hideChildrenInMenu: true,
+            routes:[
+              {
+                path:'/setTest/selectTests',
+                redirect:'/setTest/selectTests/select'
+              },
+              {
+                path: '/setTest/selectTests/select',
+                name: 'select',
+                component: './SetTest/SelectTests',
+              },
+              {
+                path: '/setTest/selectTests/selectSuccess',
+                name:'selectSuccess',
+                component: './SetTest/SelectTests/SelectSuccess',
+              },
+            ]
           },
           {
             path: '/setTest/updateQuestion',

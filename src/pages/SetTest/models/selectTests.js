@@ -1,5 +1,7 @@
 import api from '@/services/api';
 import { GET, POST } from '@/utils/request'
+import { message } from 'antd'
+import router from 'umi/router';
 
 export default {
     namespace: 'selectTests',
@@ -9,10 +11,23 @@ export default {
     },
 
     effects: {
-        *postData(_, { put, call, select }) {
-            let data = select(state => state.data)
-            let params={data:data}
-            let result = yield call(POST,api.question.selectQuestions,params)
+        *postData({ payload }, { put, call, select }) {
+            let selectTests = yield select(state => state.selectTests)
+            let { data } = selectTests
+            let para=data.map(ele => {
+                let obj={}
+                obj.qid=ele.qid 
+                return obj
+            })
+            const params={selectList:para}
+            console.log(params)
+            let response = yield call(POST, api.question.selectQuestions, params)
+            if (response.error == "success") {
+                router.push("/setTest/selectTests/selectSuccess")
+            }
+            else {
+                message.error(response.error)
+            }
         }
     },
 

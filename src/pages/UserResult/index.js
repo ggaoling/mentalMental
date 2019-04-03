@@ -55,7 +55,7 @@ class UserResult extends Component {
     ]
     return (
       <Card>
-        <Table dataSource={data} rowKey='id' columns={columns} pagination={pagination} onChange={this.handleTableChange}/>
+        <Table dataSource={data} rowKey='id' columns={columns} pagination={pagination} onChange={this.handleTableChange} onShowSizeChange={this.handleTableChange}/>
       </Card>
     );
   }
@@ -64,5 +64,4 @@ class UserResult extends Component {
 export default connect(({ userResult, loading }) => ({
   userResult,
   loading
-  // loading: loading.effects['userResult/fetchList'],
 }))(UserResult);

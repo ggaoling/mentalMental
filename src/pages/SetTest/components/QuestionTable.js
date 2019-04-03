@@ -7,7 +7,13 @@ const error = Modal.error
 class QuestionTable extends Component {
     constructor(props) {
         super(props)
+    }
 
+    componentDidMount(){
+        const {dispatch}=this.props;
+        dispatch({
+            type:'questionTable/searchByName'
+        })
     }
 
     searchqid = () => {
@@ -60,7 +66,7 @@ class QuestionTable extends Component {
         let index = 1;
         const qidColumns = [
             {
-                title: '序号', dataIndex: 'index', width:'15%', render: (record) => { return index++ }
+                title: '序号', dataIndex: 'index', width:'10%', render: (record) => { return index++ }
             },
             {
                 title: '问题ID', dataIndex: 'qid', width:'15%',
@@ -70,7 +76,7 @@ class QuestionTable extends Component {
             },
             canSelect ?
                 {
-                    title: '操作', width:'15%',render: (record) => (
+                    title: '操作', width:'30%',render: (record) => (
                         <a onClick={e => this.handleAdd(record)}>添加这一项</a>
                     )
                 } : {},
@@ -84,8 +90,8 @@ class QuestionTable extends Component {
 
         return (
             <div>
-                <div style={{ marginLeft: '30%' }}>
-                    <Input style={{ width: '30%', margin: '30px' }} onChange={e => this.handleInput(e.target.value)} />
+                <div style={{ marginLeft: '10%' }}>
+                    <Input style={{ width: '30%', margin: '30px 10px 30px 30%' }} onChange={e => this.handleInput(e.target.value)} />
                     <Button type="primary" onClick={this.searchqid}>查询</Button>
                 </div>
                 <Table dataSource={data} rowKey='qid' className={styles.table} columns={qidColumns} pagination={pagination} onChange={this.handleTableChange}/>
