@@ -16,149 +16,34 @@ export default {
   },
 
   effects: {
-    *fetchList(_, { call, put,select }) {
-      const currentUser=select(state=>state.user.currentUser)
-      const uid=currentUser.uid
+    *fetchList({payload}, { call, put,select }) {
+      const uid=localStorage.getItem("uid")
       let params={uid:uid}
-      // const result = yield call(GET,api.test.getTest,params);
-      const result = {
-        questionList: [
-          {
-            qid: '01',
-            question: 'qqqqqqqqqqqqqqqqqqqq1',
-            importance: 1,
-            type: 2,
-            answers: [{ qoption: '1', binding: '', aid: 10, qratio: 10 },
-            { qoption: '2', binding: '', aid: 11, qratio: 20 },
-            { qoption: '1', binding: '', aid: 12, qratio: 30 },
-            { qoption: '1', binding: '', aid: 13, qratio: 40 },]
-          },
-          {
-            qid: '02',
-            question: 'qqqqqqqqqqqqqqqqqqqq2',
-            importance: 1,
-            type: 1,
-            answers: [{ qoption: '1', binding: '', aid: 20, qratio: 10 },
-            { qoption: '2', binding: '07', aid: 21, qratio: 20 },
-            { qoption: '1', binding: '', aid: 22, qratio: 30 },
-            { qoption: '1', binding: '011', aid: 23, qratio: 40 },]
-          },
-          {
-            qid: '03',
-            question: 'qqqqqqqqqqqqqqqqqqqq3',
-            importance: 1,
-            type: 1,
-            answers: [{ qoption: '1', binding: '', aid: 30, qratio: 10 },
-            { qoption: '2', binding: '', aid: 31, qratio: 20 },
-            { qoption: '1', binding: '', aid: 32, qratio: 30 },
-            { qoption: '1', binding: '', aid: 33, qratio: 40 },]
-          },
-          {
-            qid: '04',
-            question: 'qqqqqqqqqqqqqqqqqqqq4',
-            importance: 1,
-            type: 2,
-            answers: [{ qoption: '1', binding: '', aid: 0, qratio: 10 },
-            { qoption: '2', binding: '', aid: 1, qratio: 20 },
-            { qoption: '1', binding: '', aid: 2, qratio: 30 },
-            { qoption: '1', binding: '', aid: 3, qratio: 40 },]
-          },
-          {
-            qid: '05',
-            question: 'qqqqqqqqqqqqqqqqqqqq6',
-            importance: 1,
-            type: 1,
-            answers: [{ qoption: '1', binding: '', aid: 0, qratio: 10 },
-            { qoption: '2', binding: '', aid: 1, qratio: 20 },
-            { qoption: '1', binding: '', aid: 2, qratio: 30 },
-            { qoption: '1', binding: '', aid: 3, qratio: 40 },]
-          },
-          {
-            qid: '06',
-            question: 'qqqqqqqqqqqqqqqqqqqq7',
-            importance: 1,
-            type: 2,
-            answers: [{ qoption: '1', binding: '', aid: 0, qratio: 10 },
-            { qoption: '2', binding: '', aid: 1, qratio: 20 },
-            { qoption: '1', binding: '', aid: 2, qratio: 30 },
-            { qoption: '1', binding: '', aid: 3, qratio: 40 },]
-          },
-          {
-            qid: '07',
-            question: 'qqqqqqqqqqqqqqqqqqqq8',
-            importance: 1,
-            type: 1,
-            answers: [{ qoption: '1', binding: '', aid: 0, qratio: 10 },
-            { qoption: '2', binding: '', aid: 1, qratio: 20 },
-            { qoption: '1', binding: '', aid: 2, qratio: 30 },
-            { qoption: '1', binding: '', aid: 3, qratio: 40 },]
-          },
-          {
-            qid: '08',
-            question: 'qqqqqqqqqqqqqqqqqqqq9',
-            importance: 1,
-            type: 1,
-            answers: [{ qoption: '1', binding: '', aid: 0, qratio: 10 },
-            { qoption: '2', binding: '', aid: 1, qratio: 20 },
-            { qoption: '1', binding: '', aid: 2, qratio: 30 },
-            { qoption: '1', binding: '', aid: 3, qratio: 40 },]
-          },
-          {
-            qid: '09',
-            question: 'qqqqqqqqqqqqqqqqqqqq10',
-            importance: 1,
-            type: 1,
-            answers: [{ qoption: '1', binding: '', aid: 0, qratio: 10 },
-            { qoption: '2', binding: '', aid: 1, qratio: 20 },
-            { qoption: '1', binding: '', aid: 2, qratio: 30 },
-            { qoption: '1', binding: '', aid: 3, qratio: 40 },]
-          },
-          {
-            qid: '10',
-            question: 'qqqqqqqqqqqqqqqqqqqq11',
-            importance: 1,
-            type: 1,
-            answers: [{ qoption: '1', binding: '', aid: 0, qratio: 10 },
-            { qoption: '2', binding: '', aid: 1, qratio: 20 },
-            { qoption: '1', binding: '', aid: 2, qratio: 30 },
-            { qoption: '1', binding: '', aid: 3, qratio: 40 },]
-          },
-          {
-            qid: '011',
-            question: 'qqqqqqqqqqqqqqqqqqqq12',
-            importance: 1,
-            type: 1,
-            answers: [{ qoption: '1', binding: '', aid: 0, qratio: 10 },
-            { qoption: '2', binding: '', aid: 1, qratio: 20 },
-            { qoption: '1', binding: '', aid: 2, qratio: 30 },
-            { qoption: '1', binding: '', aid: 3, qratio: 40 },]
-          },
-          {
-            qid: '012',
-            question: 'qqqqqqqqqqqqqqqqqqqq13',
-            importance: 1,
-            type: 2,
-            answers: [{ qoption: '1', binding: '', aid: 0, qratio: 10 },
-            { qoption: '2', binding: '', aid: 1, qratio: 20 },
-            { qoption: '1', binding: '', aid: 2, qratio: 30 },
-            { qoption: '1', binding: '', aid: 3, qratio: 40 },]
-          },
-        ],
-      }
-      if (result.questionList.length > 0) {
-        const totalStep = Math.ceil(result.questionList.length / 5)
+      const response = yield call(POST,api.test.getTest,params);
+      if (response.error=="success"&&response.result) {
+        const totalStep = Math.ceil(response.result.length / 5)
         yield put({
           type: 'save',
-          payload: { openTest: true, questionList: result.questionList, totalStep }
+          payload: { openTest: true, questionList: response.result, totalStep }
         });
+        yield put({
+          type: 'initialRenderList'
+        })
+      }
+      else{
+        error.message(response.error)
       }
     },
 
-    *postResults(_, { call, put }) {
-      // const result = yield call()
-      // if (result.success) {
+    *postResults(_, { call, put,select }) {
+      const takeTests=yield select(state=>state.takeTests)
+      const {result}=takeTests;
+      const uid=localStorage.getItem("uid");
+      const params={resultList:result,uid:Number(uid)}
+      const response = yield call(POST,api.test.submitTest,params)
+      if (response.error=="success") {
       yield put({ type: 'updateFinishStatus' })
-      // }
+      }
     }
   },
 
@@ -172,7 +57,8 @@ export default {
     initialRenderList(state, { payload }) {
       let { questionList } = state
       let renderList = []
-      for (let i = 0; i < 5; i++) {
+      let len=questionList.length<5?questionList.length:5
+      for (let i = 0; i < len; i++) {
         let question = questionList.shift()
         renderList.push(question)
       }
@@ -227,6 +113,12 @@ export default {
      */
     saveResult(state, { payload }) {
       let values = payload
+      values.forEach(item=>{
+        if(!Array.isArray(item.aid)){
+          item.aid=[item.aid];
+        }
+        return item;
+      })
       let { result, renderList } = state
       result.push(...values)
       return {

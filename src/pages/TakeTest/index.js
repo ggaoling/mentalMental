@@ -10,38 +10,46 @@ class TakeTest extends Component {
     dispatch({
       type: 'takeTests/fetchList',
     });
-    dispatch({
-      type: 'takeTests/initialRenderList'
-    })
+   
   }
   handleNext = () => {
-    const { dispatch, form, takeTests: { renderList } } = this.props
+    const { dispatch, form, takeTests: { renderList ,step,totalStep } } = this.props
     let { validateFields, resetFields } = form
     validateFields((err, values) => {
       if (!err) {
         let results = values.values;
         for (let i = 0; i < 5; i++) {
-          results[i] = { aid: results[i], qid: renderList[i].qid }
+          if(results[i]){
+            results[i] = { aid: results[i], qid: renderList[i].qid }
+          }
         }
         dispatch({
           type: 'takeTests/saveResult',
           payload: results
         })
-        dispatch({
-          type: 'takeTests/stepNext',
-          payload: results
-        })
+        //提交
+        if(step==totalStep){
+          dispatch({
+            type: 'takeTests/postResults',
+          })
+        }
+        else{
+          dispatch({
+            type: 'takeTests/stepNext',
+            payload: results
+          })
+        }
         resetFields()
       }
     })
   }
 
-  handleSubmit = () => {
-    const { dispatch, form } = this.props
-    dispatch({
-      type: 'takeTests/postResults',
-    })
-  }
+  // handleSubmit = () => {
+  //   const { dispatch, form } = this.props
+  //   dispatch({
+  //     type: 'takeTests/postResults',
+  //   })
+  // }
 
 
   render() {
@@ -70,7 +78,7 @@ class TakeTest extends Component {
           ) : (
               <Form>
                 {renderList.map((item, index) => {
-                  const defaultValue = item.type == 1 ? '' : [''];
+                  const defaultValue = item.type == 1 ? '' : [];
                   return (
                     <Form.Item key={item.qid}>
                       <span style={{ fontSize: "16px", fontWeight: "bold" }}>{(step - 1) * 5 + index + 1}. {item.question} {item.type == 1 ? '(单选)' : '(多选)'}</span>
@@ -82,9 +90,9 @@ class TakeTest extends Component {
                         })
                         (
                           item.type === 1 ? <Radio.Group >
-                            {item.answers.map(answer => (<Radio key={answer.aid} value={answer.aid} style={radioStyle}>{answer.qoption}</Radio>))}
+                            {item.answers.map(ele => (<Radio key={ele.aid} value={ele.aid} style={radioStyle}>{ele.answer}</Radio>))}
                           </Radio.Group> : <Checkbox.Group >
-                              {item.answers.map(answer => (<Checkbox key={answer.aid} value={answer.aid} style={checkboxStyle}>{answer.qoption}</Checkbox>))}
+                              {item.answers.map(ele => (<Checkbox key={ele.aid} value={ele.aid} style={checkboxStyle}>{ele.answer}</Checkbox>))}
                             </Checkbox.Group>
                         )
                       }
@@ -94,7 +102,7 @@ class TakeTest extends Component {
                 })
                 }
                 <Form.Item style={{ float: "right" }}>
-                  <Button type="primary" onClick={step < totalStep ? this.handleNext : this.handleSubmit}>{step < totalStep ? '下一页' : '提交'}</Button>
+                  <Button type="primary" onClick={this.handleNext}>{step < totalStep ? '下一页' : '提交'}</Button>
                 </Form.Item>
               </Form>
             )
@@ -111,7 +119,7 @@ class TakeTest extends Component {
   }
 }
 
-export default connect(({ takeTests, loading }) => ({
+export default connect(({ takeTests,loading }) => ({
   takeTests,
-  loading,
+  isLoading:loading.effects['/takeTests/fetchList']
 }))(TakeTest);
