@@ -8,12 +8,22 @@ class TakeTest extends Component {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
+      type:'takeTests/save',
+      payload:{
+        questionList: [],
+        step: 1,
+        renderList: [],
+        result: [],
+        finished: false,
+        openTest: false
+      }
+    })
+    dispatch({
       type: 'takeTests/fetchList',
     });
-   
   }
   handleNext = () => {
-    const { dispatch, form, takeTests: { renderList ,step,totalStep } } = this.props
+    const { dispatch, form, takeTests: { renderList ,step,questionList} } = this.props
     let { validateFields, resetFields } = form
     validateFields((err, values) => {
       if (!err) {
@@ -28,7 +38,7 @@ class TakeTest extends Component {
           payload: results
         })
         //提交
-        if(step==totalStep){
+        if(questionList.length==0){
           dispatch({
             type: 'takeTests/postResults',
           })
@@ -44,16 +54,9 @@ class TakeTest extends Component {
     })
   }
 
-  // handleSubmit = () => {
-  //   const { dispatch, form } = this.props
-  //   dispatch({
-  //     type: 'takeTests/postResults',
-  //   })
-  // }
-
 
   render() {
-    const { takeTests: { renderList, step, finished, totalStep, openTest }, form } = this.props
+    const { takeTests: { renderList, step, finished, openTest ,questionList}, form } = this.props
     const { getFieldDecorator } = form
     const radioStyle = {
       display: 'block',
@@ -102,7 +105,7 @@ class TakeTest extends Component {
                 })
                 }
                 <Form.Item style={{ float: "right" }}>
-                  <Button type="primary" onClick={this.handleNext}>{step < totalStep ? '下一页' : '提交'}</Button>
+                  <Button type="primary" onClick={this.handleNext}>{questionList.length>0 ? '下一页' : '提交'}</Button>
                 </Form.Item>
               </Form>
             )

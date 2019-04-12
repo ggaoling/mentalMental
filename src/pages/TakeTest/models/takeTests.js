@@ -8,7 +8,6 @@ export default {
   state: {
     questionList: [],
     step: 1,
-    totalStep: 0,
     renderList: [],
     result: [],
     finished: false,
@@ -16,33 +15,32 @@ export default {
   },
 
   effects: {
-    *fetchList({payload}, { call, put,select }) {
-      const uid=localStorage.getItem("uid")
-      let params={uid:uid}
-      const response = yield call(POST,api.test.getTest,params);
-      if (response.error=="success"&&response.result) {
-        const totalStep = Math.ceil(response.result.length / 5)
+    *fetchList({ payload }, { call, put, select }) {
+      const uid = localStorage.getItem("uid")
+      let params = { uid: uid }
+      const response = yield call(POST, api.test.getTest, params);
+      if (response.error == "success" && response.result) {
         yield put({
           type: 'save',
-          payload: { openTest: true, questionList: response.result, totalStep }
+          payload: { openTest: true, questionList: response.result, step: 1, }
         });
         yield put({
           type: 'initialRenderList'
         })
       }
-      else{
+      else {
         error.message(response.error)
       }
     },
 
-    *postResults(_, { call, put,select }) {
-      const takeTests=yield select(state=>state.takeTests)
-      const {result}=takeTests;
-      const uid=localStorage.getItem("uid");
-      const params={resultList:result,uid:Number(uid)}
-      const response = yield call(POST,api.test.submitTest,params)
-      if (response.error=="success") {
-      yield put({ type: 'updateFinishStatus' })
+    *postResults(_, { call, put, select }) {
+      const takeTests = yield select(state => state.takeTests)
+      const { result } = takeTests;
+      const uid = localStorage.getItem("uid");
+      const params = { resultList: result, uid: Number(uid) }
+      const response = yield call(POST, api.test.submitTest, params)
+      if (response.error == "success") {
+        yield put({ type: 'updateFinishStatus' })
       }
     }
   },
@@ -57,7 +55,7 @@ export default {
     initialRenderList(state, { payload }) {
       let { questionList } = state
       let renderList = []
-      let len=questionList.length<5?questionList.length:5
+      let len = questionList.length < 5 ? questionList.length : 5
       for (let i = 0; i < len; i++) {
         let question = questionList.shift()
         renderList.push(question)
@@ -81,15 +79,38 @@ export default {
       step++;
       let newRenderList = []
       values.map((item, index) => {
-        let aid = item.aid
-        if (!Array.isArray(aid)) {
-          let answer = renderList[index].answers.find(elem => elem.aid == aid)
-          let binding = answer.binding;
-          if (binding) {
-            let ind = questionList.findIndex(question => question.qid == binding)
-            let question = questionList.splice(ind, 1)[0]
-            newRenderList.push(question)
+        let aid = item.aid//aid is an array
+        if (aid.length == 1) {//多选没有剪枝处理
+          let answers = renderList[index].answers;
+          answers.forEach(answer => {
+            let binding = answer.binding;
+            if (binding) {
+              let ind = questionList.findIndex(question => question.qid == binding)
+              let question = questionList.splice(ind, 1)[0]
+            if (answer.aid == aid[0]) { //将选中答案的binding项放入下一页的datalist
+                newRenderList.push(question)
+              }
+
+            else{ //将该问题未选中的binding项以及它的next从questionList中删掉
+              let toDeleteAnswers=question.answers;
+              toDeleteAnswers.forEach(a=>{
+                questionList=questionList.filter(q=>q.qid!=a.binding)
+              })
+
+            }
           }
+          })
+
+
+
+          // let answer = answers.find(elem => elem.aid == aid[0])
+          // let binding = answer.binding;
+          // if (binding) {
+          //   let ind = questionList.findIndex(question => question.qid == binding)
+          //   let question = questionList.splice(ind, 1)[0]
+          //   newRenderList.push(question)
+          // }
+          // let notSelectAnswers = questionList.filter(value => value.qid == qid && value.aid != aid[0]);
         }
       })
       if (newRenderList.length < 5) {
@@ -113,9 +134,9 @@ export default {
      */
     saveResult(state, { payload }) {
       let values = payload
-      values.forEach(item=>{
-        if(!Array.isArray(item.aid)){
-          item.aid=[item.aid];
+      values.forEach(item => {
+        if (!Array.isArray(item.aid)) {
+          item.aid = [item.aid];
         }
         return item;
       })
