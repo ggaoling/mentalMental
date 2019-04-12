@@ -10,12 +10,12 @@ class SelectSuccess extends Component {
     }
 
     handleToHome=()=>{
-        router.push("/account")
+        router.push('/setTest/selectTests/select')
     }
     render() {
         const actions=(
             <Fragment>
-                <Button type="primary" onClick={e=>this.handleToHome()}>返回首页</Button>
+                <Button type="primary" onClick={e=>this.handleToHome()}>查看已选择的题目</Button>
             </Fragment>
             )
         return (

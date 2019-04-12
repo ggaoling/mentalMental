@@ -50,12 +50,12 @@ class UserResult extends Component {
         title: '得分',
         dataIndex: 'history',
         width: '20%',
-        render: (record, history) =>{history? (<Tag color={Number(history) < 25 ? 'red' : 'green'}>{history}</Tag>):''}
+        render: history=>history? (<Tag color={Number(history) < 25 ? 'red' : 'green'}>{history}</Tag>):0
       }
     ]
     return (
       <Card>
-        <Table dataSource={data} rowKey='id' columns={columns} pagination={pagination} onChange={this.handleTableChange} onShowSizeChange={this.handleTableChange}/>
+        <Table dataSource={data} rowKey='id' columns={columns} pagination={pagination} onChange={this.handleTableChange} onShowSizeChange={this.handleTableChange} />
       </Card>
     );
   }

@@ -4,11 +4,7 @@ import { GET, POST } from '@/utils/request'
 export default {
     namespace: 'questionTable',
     state: {
-        data: [
-            // {question:'11',qid:101},
-            // {question:'12',qid:103},
-            // {question:'13',qid:104},
-        ],
+        data: [],
         questionName: '',
         pagination:{
             pageNo:1,

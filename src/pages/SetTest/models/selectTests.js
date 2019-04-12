@@ -7,26 +7,57 @@ export default {
     namespace: 'selectTests',
 
     state: {
-        data: []
+        data: [],
+        selectStatus: false,
+        selectedData: [],
+        pagination: {
+            pageNo: 1,
+            pageSize: 10,
+            total: 0,
+            
+        },
     },
 
     effects: {
         *postData({ payload }, { put, call, select }) {
             let selectTests = yield select(state => state.selectTests)
             let { data } = selectTests
-            let para=data.map(ele => {
-                let obj={}
-                obj.qid=ele.qid 
+            let para = data.map(ele => {
+                let obj = {}
+                obj.qid = ele.qid
                 return obj
             })
-            const params={selectList:para}
-            console.log(params)
+            const params = { selectList: para }
             let response = yield call(POST, api.question.selectQuestions, params)
             if (response.error == "success") {
                 router.push("/setTest/selectTests/selectSuccess")
             }
             else {
                 message.error(response.error)
+            }
+        },
+        *getSelected({ payload }, { call, put, select }) {
+            const selectTests = yield select(state => state.selectTests)
+            const { pagination } = selectTests
+            const params = { pageNo: pagination.pageNo - 1, pageSize: pagination.pageSize }
+            let response = yield call(POST, api.question.getSelected, params)
+
+            if (response.error == "success") {
+                let selectStatus = true;
+                if (Array.isArray(response.result.content) && response.result.content.length > 0) {
+                    selectStatus = false
+                }
+                yield put({
+                    type: 'save',
+                    payload: {
+                        selectedData: response.result.content,
+                        selectStatus: selectStatus,
+                        pagination: {
+                            ...pagination,
+                            total: response.result.totalElements
+                        }
+                    }
+                })
             }
         }
     },
@@ -55,6 +86,13 @@ export default {
             return {
                 ...state,
                 data
+            }
+        },
+        changeSelectStatus(state, { payload }) {
+            const { selectStatus } = state;
+            return {
+                ...state,
+                selectStatus: !selectStatus
             }
         }
     }

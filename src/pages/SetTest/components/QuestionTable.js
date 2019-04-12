@@ -12,7 +12,18 @@ class QuestionTable extends Component {
     componentDidMount(){
         const {dispatch}=this.props;
         dispatch({
-            type:'questionTable/searchByName'
+            type:'questionTable/save',
+            payload:{
+                questionName:'',
+                pagination:{
+                    pageNo:1,
+                    pageSize:10,
+                    total:0
+                },
+            }
+        })
+        dispatch({
+            type:'questionTable/searchByName',
         })
     }
 

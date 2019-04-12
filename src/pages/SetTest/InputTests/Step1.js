@@ -80,7 +80,7 @@ class Step1 extends React.Component {
                     }
                     return obj
                 })
-                changeScore.fill(false)
+                changeScore.fill(true)
                 dispatch({
                     type: 'inputTests/save',
                     payload: { data: { ...values }, changeScore: changeScore },

@@ -122,7 +122,7 @@ class BaseView extends Component {
                 <List.Item>手机号：{tel}</List.Item>
                 <List.Item>
                   
-                  <Button onClick={this.handleEdit}>更改资料</Button>
+                  <Button type="primary" onClick={this.handleEdit}>更改资料</Button>
                 </List.Item>
               </List>
             </div>

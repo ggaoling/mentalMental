@@ -21,7 +21,8 @@ export default {
     queryQuestionsByName: baseUrl + "/question/queryQuestionsByName",//名字模糊查询问题列表
     selectQuestions:baseUrl + "/question/selectQuestions",
     queryQuestionByQid:baseUrl+"/question/queryQuestionByQid",//根据qid获取问题详情
-    updateQuestion:baseUrl+"/question/updateQuestion"
+    updateQuestion:baseUrl+"/question/updateQuestion",
+    getSelected:baseUrl+"/question/querySelected"
   },
   //test
   test:{
