@@ -11,18 +11,33 @@ export default {
     renderList: [],
     result: [],
     finished: false,
-    openTest: false
+    sid:-1,
   },
 
+  subscriptions: {
+    setup({ dispatch, history }) {
+      history.listen((location) => {
+        if (location.pathname === "/takeTest/taketest") {
+          if (location.query && location.query.sid) {
+            dispatch({
+              type: 'save',
+              payload: { sid: location.query.sid }
+            })
+          }
+        }
+      })
+    }
+  },
   effects: {
     *fetchList({ payload }, { call, put, select }) {
-      const uid = localStorage.getItem("uid")
-      let params = { uid: uid }
+      const takeTests = yield select(state => state.takeTests)
+       const { pagination, sid } = takeTests
+      let params = {sid:sid}
       const response = yield call(POST, api.test.getTest, params);
       if (response.error == "success" && response.result) {
         yield put({
           type: 'save',
-          payload: { openTest: true, questionList: response.result, step: 1, }
+          payload: {  questionList: response.result, step: 1, }
         });
         yield put({
           type: 'initialRenderList'
@@ -35,14 +50,27 @@ export default {
 
     *postResults(_, { call, put, select }) {
       const takeTests = yield select(state => state.takeTests)
-      const { result } = takeTests;
+      const { result,sid } = takeTests;
       const uid = localStorage.getItem("uid");
-      const params = { resultList: result, uid: Number(uid) }
+      const params = { resultList: result, uid: Number(uid),sid:sid }
       const response = yield call(POST, api.test.submitTest, params)
       if (response.error == "success") {
         yield put({ type: 'updateFinishStatus' })
       }
-    }
+    },
+
+    *getSeries({ payload }, { call, put, select }) {
+      let response = yield call(POST, api.series.getSeries);
+
+      if (response.error == "success") {
+        yield put({
+          type: 'save',
+          payload: {
+            seriesData: response.result
+          }
+        })
+      }
+    },
   },
 
   reducers: {
@@ -87,18 +115,18 @@ export default {
             if (binding) {
               let ind = questionList.findIndex(question => question.qid == binding)
               let question = questionList.splice(ind, 1)[0]
-            if (answer.aid == aid[0]) { //将选中答案的binding项放入下一页的datalist
+              if (answer.aid == aid[0]) { //将选中答案的binding项放入下一页的datalist
                 newRenderList.push(question)
               }
 
-            else{ //将该问题未选中的binding项以及它的next从questionList中删掉
-              let toDeleteAnswers=question.answers;
-              toDeleteAnswers.forEach(a=>{
-                questionList=questionList.filter(q=>q.qid!=a.binding)
-              })
+              else { //将该问题未选中的binding项以及它的next从questionList中删掉
+                let toDeleteAnswers = question.answers;
+                toDeleteAnswers.forEach(a => {
+                  questionList = questionList.filter(q => q.qid != a.binding)
+                })
 
+              }
             }
-          }
           })
 
 

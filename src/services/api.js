@@ -24,10 +24,16 @@ export default {
     updateQuestion:baseUrl+"/question/updateQuestion",
     getSelected:baseUrl+"/question/querySelected"
   },
+  //series:
+  series:{
+    addSeries:baseUrl+"/series/addSeries",
+    getSeries:baseUrl+"/series/getSeries"
+  },
   //test
   test:{
     getTest:baseUrl + "/test/getTest",
     submitTest:baseUrl + "/test/submitTest",
+    getResult:baseUrl+"/test/getResult"
   }
 
 

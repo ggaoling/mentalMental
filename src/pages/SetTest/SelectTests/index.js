@@ -9,7 +9,12 @@ class SelectTests extends Component {
     }
     componentDidMount() {
         const { dispatch } = this.props;
-
+        dispatch({
+            type:'selectTests/save',
+            payload:{
+                selectStatus: false,
+            }
+        })
         dispatch({
             type: 'selectTests/getSelected'
         })

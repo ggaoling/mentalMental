@@ -31,7 +31,25 @@ export default [
         icon: 'form',
         name: 'takeTest',
         authority: ['user'],
-        component: './TakeTest',
+        hideChildrenInMenu: true,
+        routes: [
+          {
+            path:'/takeTest',
+            redirect:'/takeTest/testList'
+          },
+          {
+            path: '/takeTest/testList',
+            name: 'testList',
+            component: './TakeTest/SeriesTable'
+          },
+          {
+            path: '/takeTest/taketest',
+            name: 'taketest',
+            component: './TakeTest'
+          }
+
+
+        ]
       },
 
       //admin
@@ -73,10 +91,15 @@ export default [
             path: '/setTest/selectTests',
             name: 'selectTests',
             hideChildrenInMenu: true,
-            routes:[
+            routes: [
               {
-                path:'/setTest/selectTests',
-                redirect:'/setTest/selectTests/select'
+                path: '/setTest/selectTests',
+                redirect: '/setTest/selectTests/series'
+              },
+              {
+                path: '/setTest/selectTests/series',
+                name: 'series',
+                component: './SetTest/SelectTests/SeriesTable'
               },
               {
                 path: '/setTest/selectTests/select',
@@ -85,7 +108,7 @@ export default [
               },
               {
                 path: '/setTest/selectTests/selectSuccess',
-                name:'selectSuccess',
+                name: 'selectSuccess',
                 component: './SetTest/SelectTests/SelectSuccess',
               },
             ]
@@ -102,7 +125,26 @@ export default [
         icon: 'inbox',
         name: 'userResult',
         authority: ['admin'],
-        component: './UserResult'
+        hideChildrenInMenu: true,
+        routes:[
+          {
+            path: '/userResult',
+            redirect:'/userResult/resultList'
+
+          },
+          {
+            path: '/userResult/result',
+            name: 'result',
+            component: './UserResult/Result'
+
+          },
+          {
+            path: '/userResult/resultList',
+            name: 'resultList',
+            component: './UserResult',
+          }
+        ]
+
       },
       {
         path: '/exception',
