@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Bar, Spin } from 'ant-design-pro/lib/Charts'
+import { Bar, Spin, ChartCard } from 'ant-design-pro/lib/Charts'
 import { connect } from '../../../../node_modules/dva';
+import { Card } from '../../../../node_modules/antd';
 
 class SimpleResult extends Component {
 
@@ -23,6 +24,9 @@ class SimpleResult extends Component {
         if (data) {
             var dataSource = [
                 {
+                    y: 0
+                },
+                {
                     x: "个人得分",
                     y: data.personal
                 }, {
@@ -31,12 +35,16 @@ class SimpleResult extends Component {
                 }
             ]
         }
-        return(
+        return (
             <div>
                 {
-                    data ? (<Bar height={500}
+                    data ? (<ChartCard><Bar height={500}
                         title={data.name}
                         data={dataSource} />
+                        <Card title="结果解读">
+                            你有轻度情绪不良，要注意调节
+                        </Card>
+                    </ChartCard>
                     ) : <span>无结果</span>
                 }
             </div>

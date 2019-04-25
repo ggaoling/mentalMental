@@ -106,11 +106,11 @@ class Step1 extends React.Component {
         let keysArray = []
         if (answers.length > 0) {
             for (let i = 0; i < answers.length; i++) {
-                keysArray[i]=i;
+                keysArray[i] = i;
             }
         }
         else {
-            keysArray=[0, 1]
+            keysArray = [0, 1]
         }
         getFieldDecorator('keys', { initialValue: keysArray });
         const keys = getFieldValue('keys');
@@ -170,6 +170,20 @@ class Step1 extends React.Component {
                         <Radio.Group >
                             <Radio value={1}>单选</Radio>
                             <Radio value={2}>多选</Radio>
+                        </Radio.Group>
+                    )}
+                </Form.Item>
+                <Form.Item {...formItemLayout} label="大五人格类型">
+                    {getFieldDecorator('dwtype', {
+                        required: false
+                    })(
+                        <Radio.Group>
+                            <Radio value={null}>无</Radio>
+                            <Radio value="o">开放性</Radio>
+                            <Radio value="c">责任性</Radio>
+                            <Radio value="e">外向性</Radio>
+                            <Radio value="a">宜人性</Radio>
+                            <Radio value="n">神经质</Radio>
                         </Radio.Group>
                     )}
                 </Form.Item>

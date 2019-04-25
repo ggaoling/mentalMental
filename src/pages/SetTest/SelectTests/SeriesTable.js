@@ -50,6 +50,9 @@ class SeriesTable extends Component {
         })
 
     }
+    handleIsopen=(id)=>{
+
+    }
     render() {
         const { selectTests: { seriesData, addNewStatus } } = this.props;
         return (
@@ -74,7 +77,7 @@ class SeriesTable extends Component {
                                     itemLayout="horizontal"
                                     dataSource={seriesData}
                                     renderItem={item => (
-                                        <List.Item actions={[<Button onClick={e => this.handleDetail(item.id.sid)}>查看</Button>]}>
+                                        <List.Item actions={[<Button onClick={e => this.handleIsopen(item.id.sid)}>{item.isopen=="false"?'开放':'关闭'}</Button>,<Button onClick={e => this.handleDetail(item.id.sid)}>查看</Button>]}>
                                             <List.Item.Meta
                                                 title={item.name}
                                                 description={item.description} />

@@ -34,8 +34,8 @@ export default [
         hideChildrenInMenu: true,
         routes: [
           {
-            path:'/takeTest',
-            redirect:'/takeTest/testList'
+            path: '/takeTest',
+            redirect: '/takeTest/testList'
           },
           {
             path: '/takeTest/testList',
@@ -50,6 +50,12 @@ export default [
 
 
         ]
+      },
+      {
+        path: '/getAdvice',
+        name: '问题解答',
+        authority: ['user'],
+        component: './GetAdvice'
       },
 
       //admin
@@ -118,7 +124,19 @@ export default [
             name: 'updateQuestion',
             component: './SetTest/UpdateQuestion'
           },
-        ]
+          {
+            path: '/setTest/setLevel',
+            name: 'setLevel',
+            component: './SetTest/SetLevel'
+          },
+        ],
+
+      },
+      {
+        path:'/reply',
+        name:'答疑解惑',
+        authority:['admin'],
+        component:'./Reply'
       },
       {
         path: '/userResult',
@@ -126,10 +144,10 @@ export default [
         name: 'userResult',
         authority: ['admin'],
         hideChildrenInMenu: true,
-        routes:[
+        routes: [
           {
             path: '/userResult',
-            redirect:'/userResult/resultList'
+            redirect: '/userResult/resultList'
 
           },
           {

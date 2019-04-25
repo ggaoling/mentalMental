@@ -60,7 +60,8 @@ export default {
     },
 
     *getSeries({ payload }, { call, put, select }) {
-      let response = yield call(POST, api.series.getSeries);
+      const param={id:localStorage.getItem("uid")}
+      let response = yield call(POST, api.series.getSeries,param);
 
       if (response.error == "success") {
         yield put({

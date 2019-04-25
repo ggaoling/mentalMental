@@ -63,7 +63,8 @@ export default {
 
     },
     *getRadioData({ payload }, { call, put }) {
-      let response = yield call(POST, api.series.getSeries);
+      const params={id:localStorage.getItem("uid")}
+      let response = yield call(POST, api.series.getSeries,params);
       if (response.error == "success") {
         yield put({
           type: 'save',

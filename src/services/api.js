@@ -34,6 +34,12 @@ export default {
     getTest:baseUrl + "/test/getTest",
     submitTest:baseUrl + "/test/submitTest",
     getResult:baseUrl+"/test/getResult"
+  },
+  advice:{
+    studentAsk:baseUrl+"/advice/studentAsk",
+    teacherReply:baseUrl+"/advice/teacherReply",
+    studentQuery:baseUrl+"/advice/studentQuery",
+    teacherQuery:baseUrl+"/advice/teacherQuery"
   }
 
 
