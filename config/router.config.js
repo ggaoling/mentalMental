@@ -54,6 +54,7 @@ export default [
       {
         path: '/getAdvice',
         name: '问题解答',
+        icon:'question-circle',
         authority: ['user'],
         component: './GetAdvice'
       },
@@ -68,7 +69,7 @@ export default [
           {
             path: '/setTest/inputTests',
             name: 'inputTests',
-            icon: 'upload',
+            // icon: 'upload',
             component: './SetTest/InputTests',
             hideChildrenInMenu: true,
             routes: [
@@ -126,7 +127,7 @@ export default [
           },
           {
             path: '/setTest/setLevel',
-            name: 'setLevel',
+            name: '设置规则',
             component: './SetTest/SetLevel'
           },
         ],
@@ -136,6 +137,7 @@ export default [
         path:'/reply',
         name:'答疑解惑',
         authority:['admin'],
+        icon:"info-circle",
         component:'./Reply'
       },
       {

@@ -27,7 +27,9 @@ export default {
   //series:
   series:{
     addSeries:baseUrl+"/series/addSeries",
-    getSeries:baseUrl+"/series/getSeries"
+    getSeries:baseUrl+"/series/getSeries",
+    setIsopen:baseUrl+"/series/setIsopen",
+    submitLevel:baseUrl+"/series/submitLevel"
   },
   //test
   test:{

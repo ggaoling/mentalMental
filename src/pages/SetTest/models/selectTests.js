@@ -19,6 +19,7 @@ export default {
         seriesData: [],
         sid:-1,
         addNewStatus:false,
+        levelData:[]
     },
 
     subscriptions: {
@@ -93,7 +94,6 @@ export default {
             }
         },
         *addSeries({payload},{call,put}){
-            console.log(payload)
             const params={...payload}
             let response=yield call(POST,api.series.addSeries,params);
             if(response.error=="success"){
@@ -108,7 +108,31 @@ export default {
             yield put({
                 type:'getSeries'
             })
-        }
+        },
+        *setIsopen({payload},{call,put,select}){
+            const params=payload
+            let response=yield call(POST,api.series.setIsopen,params);
+            if(response.error=="success"){
+                yield put({
+                    type:'getSeries'
+                })
+            }
+        },
+        *submitLevel({payload},{call,put}){
+            const params=payload
+            let response=yield call(POST,api.series.submitLevel,params);
+            // if(response.error=="success"){
+            //     yield put({
+            //         type:'save',
+
+            //     })
+            // }
+        },
+        // *getLevel({payload},{call,put}){
+        //     const params={sid:1}
+        //     let response=yield call(POST,api.series.getLevel,params);
+
+        // }
     },
 
     reducers: {

@@ -8,7 +8,8 @@ class SetLevel extends Component {
         this.state = {
             editStatus: false,
             level: [],
-            description: []
+            description: [],
+            sid:-1
         }
     }
     componentDidMount() {
@@ -18,13 +19,27 @@ class SetLevel extends Component {
         })
 
     }
-    changeEditStatus = () => {
+    changeEditStatus = (sid) => {
         const { editStatus } = this.state
         this.setState({
-            editStatus: !editStatus
+            editStatus: !editStatus,
+            sid:sid
         })
     }
-
+    submit=()=>{
+        const { dispatch } = this.props;
+        dispatch({
+            type: 'selectTests/submitLevel',
+            payload:{
+                num:this.state.level,
+                description:this.state.description,
+                sid:this.state.sid
+            }
+        })
+        this.setState({
+            editStatus:false
+        })
+    }
     render() {
         const { selectTests: { seriesData } } = this.props;
         const { editStatus, level, description } = this.state
@@ -35,14 +50,14 @@ class SetLevel extends Component {
                         <div>
                             <div style={{paddingBottom:'20px'}}>
                                 第一级别：0~<Input style={{ width: '5%' }} onChange={e => {
-                                    level.push(e.target.value)
+                                    level[0]=e.target.value
                                     this.setState({
                                         level: level
                                     })
                                 }} />
                                 <div style={{ padding: '20 5' }}>
                                     描述：<Input.TextArea rows={4} onChange={e => {
-                                        description.push(e.target.value)
+                                        description[0]=e.target.value
                                         this.setState({
                                             description: description
                                         })
@@ -52,14 +67,14 @@ class SetLevel extends Component {
                             </div>
                             <div style={{paddingBottom:'20px'}}>
                                 第二级别：<Input style={{ width: '5%' }} onChange={e => {
-                                    level.push(e.target.value)
+                                    level[1]=e.target.value
                                     this.setState({
                                         level: level
                                     })
                                 }} />
                                 <div style={{ padding: '20 5' }}>
                                     描述：<Input.TextArea rows={4} onChange={e => {
-                                        description.push(e.target.value)
+                                        description[1]=e.target.value
                                         this.setState({
                                             description: description
                                         })
@@ -68,14 +83,14 @@ class SetLevel extends Component {
                             </div>
                             <div style={{paddingBottom:'20px'}}>
                                 第三级别：<Input style={{ width: '5%' }} onChange={e => {
-                                    level.push(e.target.value)
+                                    level[2]=e.target.value
                                     this.setState({
                                         level: level
                                     })
                                 }} />
                                 <div style={{ padding: '20 5' }}>
                                     描述：<Input.TextArea rows={4} onChange={e => {
-                                        description.push(e.target.value)
+                                        description[2]=e.target.value
                                         this.setState({
                                             description: description
                                         })
@@ -84,21 +99,21 @@ class SetLevel extends Component {
                             </div>
                             <div style={{paddingBottom:'20px'}}>
                                 第四级别：<Input style={{ width: '5%' }} onChange={e => {
-                                    level.push(e.target.value)
+                                    level[3]=e.target.value
                                     this.setState({
                                         level: level
                                     })
                                 }} />
                                 <div style={{ padding: '20 5' }}>
                                     描述：<Input.TextArea rows={4} onChange={e => {
-                                        description.push(e.target.value)
+                                        description[3]=e.target.value
                                         this.setState({
                                             description: description
                                         })
                                     }} />
                                 </div>
                             </div>
-                            <Button type="primary">提交</Button>
+                            <Button type="primary" onClick={e=>this.submit()}>提交</Button>
                         </div>) :
                         (
                             <div>
@@ -109,7 +124,7 @@ class SetLevel extends Component {
                                     itemLayout="horizontal"
                                     dataSource={seriesData}
                                     renderItem={item => (
-                                        <List.Item actions={[<Button onClick={e => this.changeEditStatus()}>设置规则</Button>]}>
+                                        <List.Item actions={[<Button onClick={e => this.changeEditStatus(item.id.sid)}>设置规则</Button>]}>
                                             <List.Item.Meta
                                                 title={item.name}
                                                 description={item.description} />
