@@ -42,7 +42,7 @@ class SimpleResult extends Component {
                         title={data.name}
                         data={dataSource} />
                         <Card title="结果解读">
-                            你有轻度情绪不良，要注意调节
+                            {data.explain}
                         </Card>
                     </ChartCard>
                     ) : <span>无结果</span>

@@ -121,18 +121,22 @@ export default {
         *submitLevel({payload},{call,put}){
             const params=payload
             let response=yield call(POST,api.series.submitLevel,params);
-            // if(response.error=="success"){
-            //     yield put({
-            //         type:'save',
-
-            //     })
-            // }
+            if(response.error=="success"){
+                router.push('/setTest/setLevely')
+            }
         },
-        // *getLevel({payload},{call,put}){
-        //     const params={sid:1}
-        //     let response=yield call(POST,api.series.getLevel,params);
-
-        // }
+        *getLevel({payload},{call,put}){
+            const params=payload
+            let response=yield call(POST,api.series.getLevel,params);
+            if(response.error=="success"){
+                yield put({
+                    type:'save',
+                    payload:{
+                        levelData:response.result
+                    }
+                })
+            }
+        }
     },
 
     reducers: {
