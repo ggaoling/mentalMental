@@ -70,6 +70,7 @@ export default [
             path: '/setTest/inputTests',
             name: 'inputTests',
             // icon: 'upload',
+            authority: ['admin'],
             component: './SetTest/InputTests',
             hideChildrenInMenu: true,
             routes: [
@@ -98,6 +99,7 @@ export default [
             path: '/setTest/selectTests',
             name: 'selectTests',
             hideChildrenInMenu: true,
+            authority: ['admin'],
             routes: [
               {
                 path: '/setTest/selectTests',
@@ -123,7 +125,8 @@ export default [
           {
             path: '/setTest/updateQuestion',
             name: 'updateQuestion',
-            component: './SetTest/UpdateQuestion'
+            component: './SetTest/UpdateQuestion',
+            authority: ['admin'],
           },
           {
             path: '/setTest/setLevel',
@@ -138,7 +141,8 @@ export default [
         name:'答疑解惑',
         authority:['admin'],
         icon:"info-circle",
-        component:'./Reply'
+        component:'./Reply',
+        authority: ['admin'],
       },
       {
         path: '/userResult',
@@ -165,6 +169,13 @@ export default [
           }
         ]
 
+      },
+      {
+        path: '/commonQuestion',
+        icon: 'input',
+        name: '分享常规问题',
+        authority: ['admin'],
+        component: './Common',
       },
       {
         path: '/exception',

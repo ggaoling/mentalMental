@@ -122,7 +122,7 @@ export default {
             const params=payload
             let response=yield call(POST,api.series.submitLevel,params);
             if(response.error=="success"){
-                router.push('/setTest/setLevely')
+                router.push('/setTest/setLevel')
             }
         },
         *getLevel({payload},{call,put}){

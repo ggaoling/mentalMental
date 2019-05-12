@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from '../../../../node_modules/dva';
-import { Card, Button, List, Input } from 'antd'
+import { Card, Button, List, Input, Switch } from 'antd'
 
 class SetLevel extends Component {
     constructor(props) {
@@ -9,6 +9,8 @@ class SetLevel extends Component {
             editStatus: false,
             level: [],
             description: [],
+            average: 0,
+            needcount: false,
             sid: -1
         }
     }
@@ -34,12 +36,15 @@ class SetLevel extends Component {
     }
     submit = () => {
         const { dispatch } = this.props;
+        const {needcount}=this.state;
         dispatch({
             type: 'selectTests/submitLevel',
             payload: {
                 num: this.state.level,
                 description: this.state.description,
-                sid: this.state.sid
+                sid: this.state.sid,
+                average:needcount?0:this.state.average,
+                needcount:needcount.toString(),
             }
         })
         this.setState({
@@ -47,7 +52,7 @@ class SetLevel extends Component {
         })
     }
     render() {
-        const { selectTests: { seriesData, levelData } } = this.props;
+        const { selectTests: { seriesData, levelData }, dispatch } = this.props;
         const { editStatus, level, description } = this.state
         return (
             <Card>
@@ -58,16 +63,26 @@ class SetLevel extends Component {
                                 Array.isArray(levelData) && levelData.length > 0 ? (
                                     <div>
                                         {
-                                            levelData.map((elem, index) =>{
+                                            levelData.map((elem, index) => {
                                                 return index == 0 ? (
-                                                    <div key={elem.lid} style={{margin:'20px 20px'}}>0-{elem.num}:{elem.description}</div>
-                                                ) : (<div key={elem.lid} style={{margin:'20px 20px'}}>{levelData[index - 1].num}-{elem.num}:{elem.description}</div>)
+                                                    <div key={elem.lid} style={{ margin: '20px 20px' }}>得分区间：0-{elem.num}<span style={{marginLeft:'20px'}}> 描述：{elem.description}</span></div>
+                                                ) : (<div key={elem.lid} style={{ margin: '20px 20px' }}>得分区间：{levelData[index - 1].num}-{elem.num}<span style={{marginLeft:'20px'}}> 描述：{elem.description}</span></div>)
                                             })
                                         }
+                                        <Button onClick={e => {
+                                            dispatch({
+                                                type: 'selectTests/save',
+                                                payload: { levelData: [] }
+                                            })
+                                        }}>修改</Button>
                                     </div>
 
                                 ) : (
                                         <div>
+                                            <div style={{ paddingBottom: '20px' }}>
+                                                固定平均值：<Switch checkedChildren="固定" unCheckedChildren="不固定" defaultChecked onClick={checked => { this.setState({ needcount: !checked }) }} />
+                                                {this.state.needcount ? "" : <span style={{marginLeft:'30px'}}>输入平均值：<Input style={{ width: '10%' }} onChange={e => this.setState({ average: e.target.value })} /></span>}
+                                            </div>
                                             <div style={{ paddingBottom: '20px' }}>
                                                 第一级别：0~<Input style={{ width: '5%' }} onChange={e => {
                                                     level[0] = e.target.value
